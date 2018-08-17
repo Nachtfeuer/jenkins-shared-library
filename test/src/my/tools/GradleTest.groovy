@@ -1,5 +1,6 @@
 package my.tools
 
+import static org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 /**
@@ -11,6 +12,10 @@ class GradleTest {
      */
     @Test
     void testCheck() {
+        def script = new MockScript()
+        def gradle = new Gradle(script)
 
+        gradle.check()
+        assertThat(script.calls.size()).isEqualTo(1)
     }
 }

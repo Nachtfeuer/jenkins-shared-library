@@ -15,6 +15,6 @@ class Gradle extends Base {
      * Running clean and check goal using gradlew.
      */
     void check() {
-        this.script.sh('./gradlew clean check')
+        this.script.sh(script:'./gradlew clean check')
     }
 }

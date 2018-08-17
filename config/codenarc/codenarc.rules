@@ -99,7 +99,7 @@ ruleset {
     StaticMethodsBeforeInstanceMethods
     TernaryCouldBeElvis
     TrailingComma
-    VariableTypeRequired
+    // VariableTypeRequired
     VectorIsObsolete
 
     // rulesets/design.xml
@@ -133,7 +133,7 @@ ruleset {
     DuplicateStringLiteral
 
     // rulesets/enhanced.xml
-    CloneWithoutCloneable
+    // CloneWithoutCloneable
     JUnitAssertEqualsConstantActualValue
     MissingOverrideAnnotation
     UnsafeImplementationAsMap
@@ -203,19 +203,6 @@ ruleset {
     RequiredRegex
     RequiredString
     StatelessClass
-
-    // rulesets/grails.xml
-    GrailsDomainHasEquals
-    GrailsDomainHasToString
-    GrailsDomainReservedSqlKeywordName
-    GrailsDomainStringPropertyMaxSize
-    GrailsDomainWithServiceReference
-    GrailsDuplicateConstraint
-    GrailsDuplicateMapping
-    GrailsMassAssignment
-    GrailsPublicControllerMethod
-    GrailsServletContextReference
-    GrailsStatelessService
 
     // rulesets/groovyism.xml
     AssignCollectionSort
@@ -340,7 +327,7 @@ ruleset {
     // rulesets/size.xml
     AbcMetric   // Requires the GMetrics jar
     ClassSize
-    CrapMetric   // Requires the GMetrics jar and a Cobertura coverage file
+    // CrapMetric   // Requires the GMetrics jar and a Cobertura coverage file
     CyclomaticComplexity   // Requires the GMetrics jar
     MethodCount
     MethodSize

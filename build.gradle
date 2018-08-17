@@ -26,7 +26,7 @@ codenarcMain {
 }
 
 codenarcTest {
-    ignoreFailures true
+    ignoreFailures false
     configFile file('config/codenarc/codenarc.rules')
 }
 
@@ -42,7 +42,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.00
+                minimum = 1.00
             }
         }
     }
@@ -55,6 +55,7 @@ repositories {
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.10'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:3.11.0'
 }
 
 jacocoTestCoverageVerification.dependsOn jacocoTestReport
