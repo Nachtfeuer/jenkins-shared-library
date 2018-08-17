@@ -10,8 +10,8 @@ Useful functionality for a Jenkins shared pipeline
 ## Build with Docker
 
 ```bash
-docker build -t openjdk-1.9:1.0 .
-docker run --rm -v $PWD:/mnt/host -w /mnt/host -u 1000:1000 -it openjdk-1.8:1.0 bash -c "./gradlew"
+docker build -t openjdk-1.8:1.0 .
+docker run --rm -v $PWD:/mnt/host -w /mnt/host -u $(id -u):$(id -g) -it openjdk-1.8:1.0 bash -c "./gradlew"
 ```
 
 ## How to run your own Jenkins
@@ -31,4 +31,3 @@ docker run --rm --name=jenkins -v /work/docker/jenkins:/var/jenkins_home -p 8080
  - https://jenkins.io/doc/book/pipeline/syntax
  - https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline
  - https://jenkins.io/doc/book/pipeline/docker/
-
