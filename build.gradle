@@ -1,5 +1,6 @@
 apply plugin: 'groovy'
 apply plugin: 'codenarc'
+apply plugin: 'jacoco'
 
 sourceSets {
     main {
@@ -29,7 +30,23 @@ codenarcTest {
     configFile file('config/codenarc/codenarc.rules')
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+        html.destination file("${buildDir}/reports/coverage")
+    }
+}
 
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.00
+            }
+        }
+    }
+}
 
 repositories {
     mavenCentral()
@@ -39,5 +56,8 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.10'
     testCompile 'junit:junit:4.12'
 }
+
+jacocoTestCoverageVerification.dependsOn jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification
 
 defaultTasks 'check'

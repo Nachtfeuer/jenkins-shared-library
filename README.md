@@ -3,6 +3,9 @@ Useful functionality for a Jenkins shared pipeline
 
 ## Build the project
 
+```bash
+./gradlew
+```
 
 ## How to run your own Jenkins
 
