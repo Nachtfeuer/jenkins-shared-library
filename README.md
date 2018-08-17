@@ -7,6 +7,13 @@ Useful functionality for a Jenkins shared pipeline
 ./gradlew
 ```
 
+## Build with Docker
+
+```bash
+docker build -t openjdk-1.9:1.0 .
+docker run --rm -v $PWD:/mnt/host -w /mnt/host -u 1000:1000 -it openjdk-1.8:1.0 bash -c "./gradlew"
+```
+
 ## How to run your own Jenkins
 
 - it's important to mount jenkins home to keep installation also the Docker container goes away
