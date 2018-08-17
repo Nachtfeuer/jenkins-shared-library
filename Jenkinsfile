@@ -11,6 +11,7 @@ pipeline {
             }
 
             steps {
+                echo "building of Docker image"
             }
         }
 
