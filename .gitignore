@@ -1,0 +1,8 @@
+.settings/
+.gradle/
+build/
+bin/
+
+.classpath
+.project
+.vscode/settings.json

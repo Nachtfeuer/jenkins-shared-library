@@ -1,0 +1,43 @@
+apply plugin: 'groovy'
+apply plugin: 'codenarc'
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['src']
+        }
+    }
+
+    test {
+        groovy {
+            srcDirs = ['test']
+        }
+    }
+}
+
+codenarc {
+    toolVersion = "1.2.1"
+}
+
+codenarcMain {
+    ignoreFailures false
+    configFile file('config/codenarc/codenarc.rules')
+}
+
+codenarcTest {
+    ignoreFailures true
+    configFile file('config/codenarc/codenarc.rules')
+}
+
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.10'
+    testCompile 'junit:junit:4.12'
+}
+
+defaultTasks 'check'
