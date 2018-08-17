@@ -1,14 +1,23 @@
 pipeline {
-    agent {
-        docker {
-            image 'centos:7' args '-u root'
-        }
-    }
+    agent none
 
     stages {
+        stage('Prepare') {
+            dockerfile {
+                filename 'Dockerfile'
+                dir '.'
+                label 'openjdk-1.8'
+                additionalBuildArgs  '--build-arg version=1.0'
+            }
+        }
+
         stage('Build') {
+            agent {
+                docker { image 'openjdk-1.8:1.0' }
+            }
+
             steps {
-                sh 'yum -y install java-1.8.0-openjdk'
+                sh './gradlew'
             }
         }
     }
