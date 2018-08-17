@@ -5,11 +5,12 @@ pipeline {
         stage('Prepare') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
-                    dir '.'
                     label 'openjdk-1.8'
                     additionalBuildArgs  '--build-arg version=1.0'
                 }
+            }
+
+            steps {
             }
         }
 
