@@ -1,9 +1,10 @@
 import my.tools.Gradle
 
 /**
- * Running gradle with clean task.
+ * Running gradle with clean and check task.
  */
-Gradle call() {
+void build() {
     // creating instance of Gradle Groovy wrapper for Gradle command line tool
-    return new Gradle(this)
+    def api = new Gradle(this)
+    api.clean().check()
 }

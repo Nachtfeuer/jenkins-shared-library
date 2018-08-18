@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                gradle().clean().check()
+                gradle.build()
             }
 
             post {
