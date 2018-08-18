@@ -16,3 +16,5 @@ def clean() {
 def check() {
     return api.check()
 }
+
+return this
