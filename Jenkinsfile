@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                gradle.build()
+                xgradle.build()
             }
 
             post {
