@@ -3,7 +3,7 @@ package my.tools
 /**
  * Base of all tool classes.
  */
-class Base {
+class Base implements Serializable {
     /** Jenkinsfile script instance */
     protected final script
 
