@@ -1,10 +1,12 @@
+@Library('jenkins-shared-library@master') _
+
 pipeline {
     agent { dockerfile true }
 
     stages {
         stage('Build') {
             steps {
-                sh './gradlew clean check'
+                gradle.clean().check()
             }
 
             post {

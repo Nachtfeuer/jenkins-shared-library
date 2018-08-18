@@ -8,6 +8,19 @@ import org.junit.Test
  */
 class GradleTest {
     /**
+     * Testing of {@link Gradle#clean} method.
+     */
+    @Test
+    void testClean() {
+        def script = new MockScript()
+        def gradle = new Gradle(script)
+
+        gradle.clean()
+        assertThat(script.calls.size()).isEqualTo(1)
+        assertThat(script.calls.get(0)).isEqualTo(['sh', [script:'./gradlew clean']])
+    }
+
+    /**
      * Testing of {@link Gradle#check} method.
      */
     @Test
@@ -17,5 +30,6 @@ class GradleTest {
 
         gradle.check()
         assertThat(script.calls.size()).isEqualTo(1)
+        assertThat(script.calls.get(0)).isEqualTo(['sh', [script:'./gradlew check']])
     }
 }

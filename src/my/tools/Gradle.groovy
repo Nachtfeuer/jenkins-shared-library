@@ -12,9 +12,20 @@ class Gradle extends Base {
     }
 
     /**
-     * Running clean and check goal using gradlew.
+     * Running clean task using gradlew.
+     * @return itself to allow further operations.
+     */
+    void clean() {
+        this.script.sh(script:'./gradlew clean')
+        this
+    }
+
+    /**
+     * Running check task using gradlew.
+     * @return itself to allow further operations.
      */
     void check() {
-        this.script.sh(script:'./gradlew clean check')
+        this.script.sh(script:'./gradlew check')
+        this
     }
 }
