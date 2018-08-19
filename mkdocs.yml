@@ -5,5 +5,8 @@ repo_url: 'https://github.com/Nachtfeuer/jenkins-shared-library'
 
 pages:
     - Home: index.md
+    - User Guide:
+      - documentation.md
+      - gradle.md
 
 theme: readthedocs
