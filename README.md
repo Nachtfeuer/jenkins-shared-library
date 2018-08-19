@@ -1,6 +1,8 @@
 # jenkins-shared-pipeline
 Useful functionality for a Jenkins shared pipeline
 
+[![Build Status](https://travis-ci.org/Nachtfeuer/jenkins-shared-library.svg?branch=master)](https://travis-ci.org/Nachtfeuer/jenkins-shared-library)
+
 ## Build the project
 
 ```bash
