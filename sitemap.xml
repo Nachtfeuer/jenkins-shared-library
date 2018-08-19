@@ -5,4 +5,14 @@
      <lastmod>2018-08-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
+    <url>
+     <loc>https://nachtfeuer.github.io/jenkins-shared-library/documentation/</loc>
+     <lastmod>2018-08-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://nachtfeuer.github.io/jenkins-shared-library/gradle/</loc>
+     <lastmod>2018-08-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
 </urlset>

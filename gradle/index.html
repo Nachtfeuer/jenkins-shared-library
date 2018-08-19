@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Thomas Lehmann <thomas.lehmann.private@gmail.com">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>How to organize Gradle - jenkins-shared-library</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "How to organize Gradle";
+    var mkdocs_page_input_path = "gradle.md";
+    var mkdocs_page_url = "/jenkins-shared-library/gradle/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> jenkins-shared-library</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">User Guide</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../documentation/">How to organize Documenation</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">How to organize Gradle</a>
+    <ul class="subnav">
+            
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">jenkins-shared-library</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>User Guide &raquo;</li>
+        
+      
+    
+    <li>How to organize Gradle</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/Nachtfeuer/jenkins-shared-library/edit/master/docs/gradle.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="how-to-organize-gradle">How to organize Gradle</h1>
+<div class="toc">
+<ul>
+<li><a href="#how-to-organize-gradle">How to organize Gradle</a><ul>
+<li><a href="#why-gradle">Why Gradle?</a></li>
+<li><a href="#the-gradle-wrapper">The Gradle Wrapper</a><ul>
+<li><a href="#current-gradle-version">Current Gradle version</a></li>
+<li><a href="#adding-a-wrapper">Adding a wrapper</a></li>
+<li><a href="#upgrading-the-gradle-version">Upgrading the Gradle version</a></li>
+</ul>
+</li>
+<li><a href="#basic-setup">Basic Setup</a></li>
+<li><a href="#best-practises">Best Practises</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="why-gradle">Why Gradle?</h2>
+<p>Gradle is <strong>very comfortable</strong> task manager to build your project.
+You can define the required tasks with a <strong>short amount of code</strong>.</p>
+<h2 id="the-gradle-wrapper">The Gradle Wrapper</h2>
+<p>The <a href="https://docs.gradle.org/current/userguide/gradle_wrapper.html">gradle wrapper</a>
+helps you to install the Gradle version you need.</p>
+<h3 id="current-gradle-version">Current Gradle version</h3>
+<pre><code class="bash">./gradlew --version
+</code></pre>
+
+<h3 id="adding-a-wrapper">Adding a wrapper</h3>
+<pre><code class="bash">gradle wrapper
+</code></pre>
+
+<h3 id="upgrading-the-gradle-version">Upgrading the Gradle version</h3>
+<p>Define the version of Gradle you would like to have:</p>
+<pre><code class="bash">./gradlew wrapper --gradle-version 4.9
+</code></pre>
+
+<p>You can verify it like following:</p>
+<pre><code class="bash">$ cat gradle/wrapper/gradle-wrapper.properties
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-4.9-bin.zip
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+</code></pre>
+
+<h2 id="basic-setup">Basic Setup</h2>
+<ul>
+<li>Of course it requires <code>apply plugin: 'groovy'</code> because the shared library (Jenkins) depends on it.</li>
+<li>The source sets have to be changed because the Jenkins guys do not use the standard folder structure
+   as proposed by Maven/Gradle. The name of the languages (here: groovy) has been removed from the paths.</li>
+<li>You are not advised to use <strong>vars</strong> in the source sets because you cannot test the code and
+   you code coverage would essentially decrease.</li>
+<li><strong>Jacoco</strong> is used as official documented. Here 1.0 is adjusted as code coverage limit means 100%
+   code coverage is expected. Adding new functionality without adding sufficient tests will fail
+   the build.</li>
+<li><strong>Codenarc</strong> is the static code analyser for Groovy. Most rules are used and located under
+   <code>config/codenarc/codenarc.rules</code>. Every rule that is not correct applied will fail the build.</li>
+<li><strong>Coveralls</strong> (a great service for visualizing code coverage results) is useful if you run your
+   Github project with integrations like <a href="https://travis-ci.org/">Travis CI</a> - In both cases you have to
+   enable the repository there before you can use it; in my case login with my Github Account
+   to Travis CI as well as to <a href="https://coveralls.io/">COVERALLS</a>; it's mainly a button to toggle the
+   wanted repository on/off.</li>
+</ul>
+<h2 id="best-practises">Best Practises</h2>
+<ul>
+<li>When one of your tests is failing Gradle usually prints the path to the XML file instead
+   of showing the problem. Therefor you can do following: <code>gradle test -i</code>; the <code>-i</code> forces
+   to print all to stdout and that way you can easily scroll back the terminal to the
+   printed callstack.</li>
+<li>Continous testing can be done with <code>gradle test -it</code>. Gradle detects changes in files
+   when you save them and reruns the tasks (here: all tests).</li>
+<li>You also can run individual tests with a filter: <code>gradle test -it --tests GradleTest</code></li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../documentation/" class="btn btn-neutral" title="How to organize Documenation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/Nachtfeuer/jenkins-shared-library/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../documentation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
