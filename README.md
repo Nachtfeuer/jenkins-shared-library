@@ -2,6 +2,7 @@
 Useful functionality for a Jenkins shared pipeline
 
 [![Build Status](https://travis-ci.org/Nachtfeuer/jenkins-shared-library.svg?branch=master)](https://travis-ci.org/Nachtfeuer/jenkins-shared-library)
+[![Coverage Status](https://coveralls.io/repos/github/Nachtfeuer/jenkins-shared-library/badge.svg?branch=master)](https://coveralls.io/github/Nachtfeuer/jenkins-shared-library?branch=master)
 
 ## Build the project
 
