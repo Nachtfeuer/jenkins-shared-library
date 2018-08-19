@@ -1,0 +1,9 @@
+site_name: jenkins-shared-library
+site_author: 'Thomas Lehmann <thomas.lehmann.private@gmail.com'
+site_url: 'https://nachtfeuer.github.io/jenkins-shared-library/'
+repo_url: 'https://github.com/Nachtfeuer/jenkins-shared-library'
+
+pages:
+    - Home: index.md
+
+theme: readthedocs

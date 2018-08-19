@@ -3,6 +3,8 @@ Useful functionality for a Jenkins shared pipeline
 
 [![Build Status](https://travis-ci.org/Nachtfeuer/jenkins-shared-library.svg?branch=master)](https://travis-ci.org/Nachtfeuer/jenkins-shared-library)
 [![Coverage Status](https://coveralls.io/repos/github/Nachtfeuer/jenkins-shared-library/badge.svg?branch=master)](https://coveralls.io/github/Nachtfeuer/jenkins-shared-library?branch=master)
+[![GitHub license](https://img.shields.io/github/license/Nachtfeuer/jenkins-shared-library.svg)](https://github.com/Nachtfeuer/jenkins-shared-library/blob/master/LICENSE)
+[![Documentation](https://img.shields.io/badge/documentation-ok-brightgreen.svg)](https://nachtfeuer.github.io/jenkins-shared-library/)
 
 ## Build the project
 
@@ -36,3 +38,5 @@ docker run --rm --name=jenkins -v /work/docker/jenkins:/var/jenkins_home -p 8080
  - https://jenkins.io/doc/book/pipeline/syntax
  - https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline
  - https://jenkins.io/doc/book/pipeline/docker/
+ - https://github.com/kt3k/coveralls-gradle-plugin
+ - https://www.mkdocs.org
