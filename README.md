@@ -25,6 +25,8 @@ mkdir -p /work/docker/jenkins
 docker run --rm --name=jenkins -v /work/docker/jenkins:/var/jenkins_home -p 8080:8080 -d jenkinsci/blueocean
 ```
 
+ - visit that Jenkins on your `box`  at http://localhost:8080
+
 ## Useful links
 
  - https://hub.docker.com/r/jenkinsci/blueocean/
