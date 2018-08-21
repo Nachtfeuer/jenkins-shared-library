@@ -7,7 +7,7 @@ class VirtualEnv extends Base {
     /** folder name of the virtual environment (default: venv). */
     private String theFolderName = 'venv'
     /** list of requirements to install with pip */
-    private final List<String> requirements = []
+    private final List<String> theRequirements = []
 
     /**
      * Initializing gradle with Jenkinsfile script instance only.
@@ -27,7 +27,7 @@ class VirtualEnv extends Base {
      * @return list of configured requirements.
      */
     List<String> getRequirements() {
-        this.requirements.asImmutable()
+        this.theRequirements.asImmutable()
     }
 
     /**
@@ -41,8 +41,8 @@ class VirtualEnv extends Base {
             this.theFolderName = config.folderName
         } else if (config.containsKey('requirements') && config.requirements instanceof List
                                                       && config.requirements.every { it instanceof String }) {
-            this.requirements.clear()
-            this.requirements.addAll(config.requirements)
+            this.theRequirements.clear()
+            this.theRequirements.addAll(config.requirements)
         }
         this
     }
@@ -66,8 +66,8 @@ class VirtualEnv extends Base {
      */
     private void setup() {
         this.script.sh(script:'virtualenv ' + this.theFolderName)
-        for (def ix = 0; ix < this.requirements.size(); ++ix) {
-            this.script.sh(script:"python -m pip install ${requirements[ix]}")
+        for (def ix = 0; ix < this.theRequirements.size(); ++ix) {
+            this.script.sh(script:"python -m pip install ${theRequirements[ix]}")
         }
     }
 
