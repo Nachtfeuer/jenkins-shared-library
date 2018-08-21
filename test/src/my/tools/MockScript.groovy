@@ -10,10 +10,17 @@ class MockScript {
     private final env = [PATH:'']
     /** current working path. */
     private final String currentPath = System.getProperty('user.dir')
+    /** status of current build and the description */
+    private final Map currentBuild = [result:null, description:'']
 
     /** readonly access to list off calls. **/
     def getCalls() {
         this.calls.asImmutable()
+    }
+
+    /** access to current build */
+    def getCurrentBuild() {
+        this.currentBuild
     }
 
     /** mock of the Jenkins sh DSL function. */

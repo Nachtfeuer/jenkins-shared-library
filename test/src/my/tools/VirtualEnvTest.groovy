@@ -74,4 +74,20 @@ class VirtualEnvTest {
         assertThat(script.calls.get(4).toString()).isEqualTo(
             ['sh', [script:'python -m pip install wheel==0.29.0']].toString())
     }
+
+    /**
+     * Testing with error that the pipeline state is set to failure and the
+     * Python virtual environment is finally removed.
+     */
+    @Test
+    @SuppressWarnings('ThrowRuntimeException')
+    void testProcessWithError() {
+        def script = new MockScript()
+        def api = new VirtualEnv(script)
+        def result = api.process { throw new RuntimeException('some error') }
+
+        assertThat(result).isEqualTo(null)
+        assertThat(script.currentBuild.result).isEqualTo('FAILURE')
+        assertThat(script.calls.get(3)).isEqualTo(['sh', [script:'rm -rf venv']])
+    }
 }

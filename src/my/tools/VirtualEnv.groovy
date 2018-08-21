@@ -55,7 +55,12 @@ class VirtualEnv extends Base {
     def process(final Closure body) {
         this.script.withEnv(this.environment()) {
             this.setup()
-            def result = body()
+            def result = null
+            try {
+                result = body()
+            } catch (err) {
+                this.script.currentBuild.result = 'FAILURE'
+            }
             this.teardown()
             result
         }
