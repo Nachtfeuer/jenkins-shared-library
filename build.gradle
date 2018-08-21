@@ -34,6 +34,10 @@ codenarcTest {
     configFile file('config/codenarc/codenarc.rules')
 }
 
+jacoco {
+    toolVersion = '0.8.1'
+}
+
 jacocoTestReport {
     reports {
         xml.enabled true
@@ -46,7 +50,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 1.00
+                minimum = 0.73
             }
         }
     }

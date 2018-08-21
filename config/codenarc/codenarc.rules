@@ -115,7 +115,7 @@ ruleset {
     EmptyMethodInAbstractClass
     FinalClassWithProtectedMember
     ImplementationAsType
-    Instanceof
+    // Instanceof
     LocaleSetDefault
     NestedForLoop
     PrivateFieldCouldBeFinal
@@ -134,9 +134,9 @@ ruleset {
 
     // rulesets/enhanced.xml
     // CloneWithoutCloneable
-    JUnitAssertEqualsConstantActualValue
-    MissingOverrideAnnotation
-    UnsafeImplementationAsMap
+    // JUnitAssertEqualsConstantActualValue
+    // MissingOverrideAnnotation
+    // UnsafeImplementationAsMap
 
     // rulesets/exceptions.xml
     CatchArrayIndexOutOfBoundsException
