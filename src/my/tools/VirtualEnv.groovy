@@ -39,11 +39,14 @@ class VirtualEnv extends Base {
         if (config.containsKey('folderName') && config.folderName instanceof String
                                              && !config.folderName.isEmpty()) {
             this.theFolderName = config.folderName
-        } else if (config.containsKey('requirements') && config.requirements instanceof List
+        }
+
+        if (config.containsKey('requirements') && config.requirements instanceof List
                                                       && config.requirements.every { it instanceof String }) {
             this.theRequirements.clear()
             this.theRequirements.addAll(config.requirements)
         }
+
         this
     }
 
@@ -71,8 +74,8 @@ class VirtualEnv extends Base {
      */
     private void setup() {
         this.script.sh(script:'virtualenv ' + this.theFolderName)
-        for (def ix = 0; ix < this.theRequirements.size(); ++ix) {
-            this.script.sh(script:"python -m pip install ${theRequirements[ix]}")
+        this.theRequirements.each {
+            this.script.sh(script:"python -m pip install ${it}")
         }
     }
 
