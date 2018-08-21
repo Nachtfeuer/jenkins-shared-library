@@ -53,19 +53,6 @@
     <a class="current" href=".">Home</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#welcome-to-the-jenkins-shared-library-project">Welcome to the Jenkins shared library project</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#purpose">Purpose</a></li>
-        
-            <li><a class="toctree-l3" href="#quickstart">Quickstart</a></li>
-        
-            <li><a class="toctree-l3" href="#about-quality">About quality</a></li>
-        
-        </ul>
-    
-
     </ul>
 	    </li>
           
@@ -124,6 +111,17 @@
             <div class="section">
               
                 <h1 id="welcome-to-the-jenkins-shared-library-project">Welcome to the Jenkins shared library project</h1>
+<div class="toc">
+<ul>
+<li><a href="#welcome-to-the-jenkins-shared-library-project">Welcome to the Jenkins shared library project</a><ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#quickstart">Quickstart</a></li>
+<li><a href="#about-quality">About quality</a></li>
+<li><a href="#useful-links">Useful links</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <h2 id="purpose">Purpose</h2>
 <ul>
 <li>providing a reference example project for your own Jenkins shared library project</li>
@@ -144,12 +142,25 @@ downloaded and used. The basic requirements can be easily seen in the file
 <li>You should have a verified code style. The tool <strong>Codenarc</strong> provides you for Groovy
    what Checkstyle does for Java. The build does fail when any source code does
    not match the defined rules. It runs automatically with <code>./gradlew</code>.</li>
-<li>Code coverage check is configured and <strong>100% code coverage is expected</strong>!
+<li>Code coverage check is configured and <strong>100% code coverage (line) is expected</strong>!
    If you add new functionality without a test the build will fail.
    It also runs automatically with <code>./gradlew</code>.</li>
 <li><strong>Provide reasonable documentation</strong>. Any documentation like this one is for you as
    well as for others. Please consider source code documentation as well
    as markdown based documentation to help to understand things.</li>
+</ul>
+<h2 id="useful-links">Useful links</h2>
+<ul>
+<li><a href="https://jenkins.io/doc/book/pipeline/syntax/">https://jenkins.io/doc/book/pipeline/syntax/</a></li>
+<li><a href="https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline">https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline</a></li>
+<li><a href="https://jenkins.io/doc/book/pipeline/docker/">https://jenkins.io/doc/book/pipeline/docker/</a></li>
+<li><a href="https://jenkins.io/doc/pipeline/steps/">https://jenkins.io/doc/pipeline/steps/</a></li>
+<li><a href="https://gradle.org/">https://gradle.org/</a></li>
+<li><a href="https://docs.gradle.org/current/userguide/jacoco_plugin.html">https://docs.gradle.org/current/userguide/jacoco_plugin.html</a></li>
+<li><a href="https://gradle-pitest-plugin.solidsoft.info/">https://gradle-pitest-plugin.solidsoft.info/</a></li>
+<li><a href="http://pitest.org/">http://pitest.org/</a></li>
+<li><a href="http://codenarc.sourceforge.net/">http://codenarc.sourceforge.net/</a></li>
+<li><a href="https://www.mkdocs.org/">https://www.mkdocs.org/</a></li>
 </ul>
               
             </div>
@@ -201,5 +212,5 @@ downloaded and used. The basic requirements can be easily seen in the file
 
 <!--
 MkDocs version : 1.0.1
-Build Date UTC : 2018-08-21 18:00:39
+Build Date UTC : 2018-08-21 18:35:40
 -->
