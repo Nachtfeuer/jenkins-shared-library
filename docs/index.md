@@ -1,5 +1,6 @@
 # Welcome to the Jenkins shared library project
 
+[TOC]
 
 ## Purpose
 
@@ -24,9 +25,22 @@ downloaded and used. The basic requirements can be easily seen in the file
  - You should have a verified code style. The tool **Codenarc** provides you for Groovy
    what Checkstyle does for Java. The build does fail when any source code does
    not match the defined rules. It runs automatically with `./gradlew`.
- - Code coverage check is configured and **100% code coverage is expected**!
+ - Code coverage check is configured and **100% code coverage (line) is expected**!
    If you add new functionality without a test the build will fail.
    It also runs automatically with `./gradlew`.
  - **Provide reasonable documentation**. Any documentation like this one is for you as
    well as for others. Please consider source code documentation as well
    as markdown based documentation to help to understand things.
+
+## Useful links
+
+ - <https://jenkins.io/doc/book/pipeline/syntax/>
+ - <https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline>
+ - <https://jenkins.io/doc/book/pipeline/docker/>
+ - <https://jenkins.io/doc/pipeline/steps/>
+ - <https://gradle.org/>
+ - <https://docs.gradle.org/current/userguide/jacoco_plugin.html>
+ - <https://gradle-pitest-plugin.solidsoft.info/>
+ - <http://pitest.org/>
+ - <http://codenarc.sourceforge.net/>
+ - <https://www.mkdocs.org/>
