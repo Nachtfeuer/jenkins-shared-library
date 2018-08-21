@@ -8,5 +8,6 @@ pages:
     - User Guide:
       - documentation.md
       - gradle.md
+      - virtualenv.md
 
 theme: readthedocs

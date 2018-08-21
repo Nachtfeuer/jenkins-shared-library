@@ -66,8 +66,8 @@ class VirtualEnv extends Base {
      */
     private void setup() {
         this.script.sh(script:'virtualenv ' + this.theFolderName)
-        this.requirements.each {
-            this.script.sh(script:"python -m pip install ${it}")
+        for (def ix = 0; ix < this.requirements.size(); ++ix) {
+            this.script.sh(script:"python -m pip install ${requirements[ix]}")
         }
     }
 
