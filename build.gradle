@@ -77,5 +77,6 @@ dependencies {
 
 jacocoTestCoverageVerification.dependsOn jacocoTestReport
 check.dependsOn jacocoTestCoverageVerification
+check.finalizedBy 'pitest'
 
 defaultTasks 'check'

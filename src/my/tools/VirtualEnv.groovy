@@ -36,13 +36,15 @@ class VirtualEnv extends Base {
      *        virtual environment is supported.
      */
     VirtualEnv configure(final Map config) {
-        if (config.containsKey('folderName') && config.folderName instanceof String
-                                             && !config.folderName.isEmpty()) {
+        if (config && config.containsKey('folderName')
+                && config.folderName instanceof String
+                && !config.folderName.isEmpty()) {
             this.theFolderName = config.folderName
         }
 
-        if (config.containsKey('requirements') && config.requirements instanceof List
-                                                      && config.requirements.every { it instanceof String }) {
+        if (config && config.containsKey('requirements')
+                && config.requirements instanceof List
+                && config.requirements.every { it instanceof String }) {
             this.theRequirements.clear()
             this.theRequirements.addAll(config.requirements)
         }

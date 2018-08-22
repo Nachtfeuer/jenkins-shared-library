@@ -27,9 +27,10 @@ class VirtualEnvTest {
      */
     @Test
     void testInValidConfigure() {
-        def script = new MockScript()
-        def api = new VirtualEnv(script)
+        def api = new VirtualEnv(null)
 
+        api.configure(null)                     // config fails
+        api.configure(123:'myenv')              // containsKey fails
         api.configure(unknownParameter:'myenv') // containsKey fails
         api.configure(folderName:1234)          // is String fails
         api.configure(folderName:'')            // isEmpty fails
