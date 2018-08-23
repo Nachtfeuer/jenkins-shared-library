@@ -1,4 +1,4 @@
-@Library('jenkins-shared-library@xgradle-publish') _
+@Library('jenkins-shared-library@master') _
 
 pipeline {
     agent { dockerfile true }
