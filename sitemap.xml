@@ -2,22 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/</loc>
-     <lastmod>2018-08-21</lastmod>
+     <lastmod>2018-08-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/documentation/</loc>
-     <lastmod>2018-08-21</lastmod>
+     <lastmod>2018-08-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/gradle/</loc>
-     <lastmod>2018-08-21</lastmod>
+     <lastmod>2018-08-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/virtualenv/</loc>
-     <lastmod>2018-08-21</lastmod>
+     <lastmod>2018-08-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://nachtfeuer.github.io/jenkins-shared-library/xgradle/</loc>
+     <lastmod>2018-08-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

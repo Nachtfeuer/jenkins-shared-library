@@ -7,16 +7,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Thomas Lehmann <thomas.lehmann.private@gmail.com">
-  <link rel="shortcut icon" href="/jenkins-shared-library/img/favicon.ico">
-  <title>jenkins-shared-library</title>
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Own Gradle DSL - jenkins-shared-library</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="/jenkins-shared-library/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="/jenkins-shared-library/css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   
-  <script src="/jenkins-shared-library/js/jquery-2.1.1.min.js" defer></script>
-  <script src="/jenkins-shared-library/js/modernizr-2.8.3.min.js" defer></script>
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Own Gradle DSL";
+    var mkdocs_page_input_path = "xgradle.md";
+    var mkdocs_page_url = "/jenkins-shared-library/xgradle/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
   
@@ -29,9 +36,9 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href="/jenkins-shared-library/." class="icon icon-home"> jenkins-shared-library</a>
+        <a href=".." class="icon icon-home"> jenkins-shared-library</a>
         <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="/jenkins-shared-library/search.html" method="get">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
@@ -43,7 +50,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="/jenkins-shared-library/.">Home</a>
+    <a class="" href="..">Home</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -52,11 +59,11 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="/jenkins-shared-library/documentation/">How to organize Documenation</a>
+    <a class="" href="../documentation/">How to organize Documenation</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="/jenkins-shared-library/gradle/">How to organize Gradle</a>
+    <a class="" href="../gradle/">How to organize Gradle</a>
                 </li>
     </ul>
 	    </li>
@@ -67,11 +74,26 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="/jenkins-shared-library/virtualenv/">Python virtual environments</a>
+    <a class="" href="../virtualenv/">Python virtual environments</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="/jenkins-shared-library/xgradle/">Own Gradle DSL</a>
+    <a class="current" href="./">Own Gradle DSL</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#own-gradle-dsl">Own Gradle DSL</a></li>
+    
+
+    <li class="toctree-l3"><a href="#purpose">Purpose</a></li>
+    
+
+    <li class="toctree-l3"><a href="#build">Build</a></li>
+    
+
+    <li class="toctree-l3"><a href="#publish">Publish</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -86,7 +108,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="/jenkins-shared-library/.">jenkins-shared-library</a>
+        <a href="..">jenkins-shared-library</a>
       </nav>
 
       
@@ -94,10 +116,19 @@
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="/jenkins-shared-library/.">Docs</a> &raquo;</li>
+    <li><a href="..">Docs</a> &raquo;</li>
     
+      
+        
+          <li>DSL &raquo;</li>
+        
+      
     
+    <li>Own Gradle DSL</li>
     <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/Nachtfeuer/jenkins-shared-library/edit/master/docs/xgradle.md"
+          class="icon icon-github"> Edit on GitHub</a>
       
     </li>
   </ul>
@@ -106,15 +137,36 @@
           <div role="main">
             <div class="section">
               
+                <h1 id="own-gradle-dsl">Own Gradle DSL</h1>
+<h1 id="purpose">Purpose</h1>
+<ul>
+<li>builder concept (chaining of tasks)</li>
+<li>standardization (junit, jacoco, ...)</li>
+</ul>
+<h1 id="build">Build</h1>
+<p>The <strong>xgradle</strong> DSL does use internally a <strong>Gradle</strong> class
+chaining the tasks <strong>clean</strong> and <strong>check</strong>:</p>
+<pre><code class="groovy">xgradle.build()
+</code></pre>
 
-  <h1 id="404-page-not-found">404</h1>
+<p><strong>Please note</strong>: In a declarative pipeline you have to place it in a <code>script { ... }</code>.</p>
+<h1 id="publish">Publish</h1>
+<p>Publishing of build results (junit, jacoco, ...):</p>
+<pre><code class="groovy">xgradle.publish()
+</code></pre>
 
-  <p><strong>Page not found</strong></p>
-
-
+<p><strong>Please note</strong>: In a declarative pipeline you have to place it in a <code>script { ... }</code>.</p>
+              
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../virtualenv/" class="btn btn-neutral" title="Python virtual environments"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -140,12 +192,14 @@
           <a href="https://github.com/Nachtfeuer/jenkins-shared-library/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
+        <span><a href="../virtualenv/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
       
     </span>
 </div>
-    <script>var base_url = '/jenkins-shared-library';</script>
-    <script src="/jenkins-shared-library/js/theme.js" defer></script>
-      <script src="/jenkins-shared-library/search/main.js" defer></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
 
 </body>
 </html>
