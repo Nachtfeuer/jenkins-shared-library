@@ -21,8 +21,9 @@ pipeline {
 
             post {
                 always {
-                    junit '**/TEST*.xml'
-                    jacoco()
+                    script {
+                        xgradle.publish()
+                    }
                 }
             }
         }
