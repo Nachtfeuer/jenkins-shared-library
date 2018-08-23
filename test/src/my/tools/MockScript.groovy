@@ -48,4 +48,14 @@ class MockScript {
         this.env.putAll(oldEnv)
         result
     }
+
+    /** mock of the junit DSL function. */
+    def junit(final Map config) {
+        this.calls.add(['junit', config])
+    }
+
+    /** mock of the jacoco DSL function. */
+    def jacoco() {
+        this.calls.add(['jacoco'])
+    }
 }

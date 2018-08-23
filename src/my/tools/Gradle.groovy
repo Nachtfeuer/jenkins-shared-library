@@ -15,7 +15,7 @@ class Gradle extends Base {
      * Running clean task using gradlew.
      * @return itself to allow further operations.
      */
-    void clean() {
+    Gradle clean() {
         this.script.sh(script:'./gradlew clean')
         this
     }
@@ -24,8 +24,18 @@ class Gradle extends Base {
      * Running check task using gradlew.
      * @return itself to allow further operations.
      */
-    void check() {
+    Gradle check() {
         this.script.sh(script:'./gradlew check')
+        this
+    }
+
+    /**
+     * Publishing reports (junit, jacococ, ...).
+     * @return itself to allow further operations.
+     */
+    Gradle publish() {
+        this.script.junit(testResults:'**/TEST*.xml')
+        this.script.jacoco()
         this
     }
 }

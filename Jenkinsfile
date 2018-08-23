@@ -1,4 +1,4 @@
-@Library('jenkins-shared-library@master') _
+@Library('jenkins-shared-library@xgradle-publish') _
 
 pipeline {
     agent { dockerfile true }
@@ -21,8 +21,9 @@ pipeline {
 
             post {
                 always {
-                    junit '**/TEST*.xml'
-                    jacoco()
+                    script {
+                        xgradle.publish()
+                    }
                 }
             }
         }

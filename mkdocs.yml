@@ -3,11 +3,13 @@ site_author: 'Thomas Lehmann <thomas.lehmann.private@gmail.com'
 site_url: 'https://nachtfeuer.github.io/jenkins-shared-library/'
 repo_url: 'https://github.com/Nachtfeuer/jenkins-shared-library'
 
-pages:
+nav:
     - Home: index.md
     - User Guide:
       - documentation.md
       - gradle.md
+    - DSL:
       - virtualenv.md
+      - xgradle
 
 theme: readthedocs
