@@ -10,6 +10,6 @@ nav:
       - gradle.md
     - DSL:
       - virtualenv.md
-      - xgradle
+      - xgradle.md
 
 theme: readthedocs
