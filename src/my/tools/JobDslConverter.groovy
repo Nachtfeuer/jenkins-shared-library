@@ -34,7 +34,7 @@ class JobDslConverter extends Base {
      * @param jobDefinition Map with fields as a job definition.
      * @return Job DSL code
      */
-    private static String fromMap(final Map jobDefinition) {
+    static String fromMap(final Map jobDefinition) {
         def builder = new JobDslBuilder()
         jobDefinition.each {
             key, value ->

@@ -9,6 +9,21 @@ and/or updating of Jenkins jobs and views. This library adds now
 functionality to read a job description via Map (in Memory),
 a JSON file or a YAML file generating Job DSL code.
 
+## Job definition
+
+Independent whether you use a Map in memory, a JSON file or a yaml file the
+job definition for creating a new job is following:
+
+| field         | meaning           | comment                                                      |
+|-------------- | ----------------- | ------------------------------------------------------------ |
+| name          | name of the job   | an existing job with will be update if it is of same type    |
+| description   | job description   | also may contain HTML; rendered when configured in Jenkins   |
+| type          | type of job       | supported: MULTIBRANCH_PIPELINE (default) or PIPELINE        |
+| source        | source url        | git is supported only (ssh or https variant of url to clone) |
+| credentialsId | Id of credentials | optional; Jenkins credentials store for SSH credentials      |
+| script        | Jenkinsfile path  | path and filename of Jenkinsfile (default: Jenkinsfile)      |
+
+
 ## Example with JSON
 
 ```groovy
@@ -62,7 +77,7 @@ pipeline {
                         source:'https://github.com/Nachtfeuer/jenkins-shared-library.git',
                         script:'Jenkinsfile',
                     ]
-                    writeJSON(file:'demo.yaml', data:DATA)
+                    writeYaml(file:'demo.yaml', data:DATA)
                 }
             }
         }

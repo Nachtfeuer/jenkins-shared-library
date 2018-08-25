@@ -17,3 +17,12 @@ String fromJson(final String jsonPathAndFilename) {
 String fromYaml(final String yamlPathAndFilename) {
     new JobDslConverter(this).fromYaml(yamlPathAndFilename)
 }
+
+/**
+ * Generating Job DSL code from a Map representing one job.
+ * @param job Definition map with fields representing a job.
+ * @return Job DSL code
+ */
+String fromMap(final Map jobDefinition) {
+    JobDslConverter.fromMap(jobDefinition)
+}
