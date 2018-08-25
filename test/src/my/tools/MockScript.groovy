@@ -33,6 +33,12 @@ class MockScript {
     /** mock of the Jenkins sh DSL function. */
     def sh(final Map config) {
         this.calls.add(['sh', config])
+
+        if (this.provides) {
+            this.provides.pop()
+        } else {
+            null
+        }
     }
 
     /** mock of the Jenkins pwd DSL function. */
