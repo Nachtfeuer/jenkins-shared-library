@@ -21,7 +21,7 @@ String getUrl() {
  * @return author name.
  */
 String getAuthorName() {
-    new Git(this).autorName
+    new Git(this).authorName
 }
 
 /**
