@@ -12,6 +12,7 @@ class JobDslConverter extends Base {
     }
 
     /**
+     * Generating Job DSL code from a JSON file representing on job.
      * @param jsonPathAndFilename path and filename of JSON file.
      * @return Job DSL code
      */

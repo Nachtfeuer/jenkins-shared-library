@@ -11,5 +11,6 @@ nav:
     - DSL:
       - virtualenv.md
       - xgradle.md
+      - jobdslcode.md
 
 theme: readthedocs
