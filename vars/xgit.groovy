@@ -28,6 +28,6 @@ String getAuthorName() {
  * Get last commit author mail.
  * @return author mail.
  */
-String getAutorMail() {
+String getAuthorMail() {
     new Git(this).authorMail
 }
