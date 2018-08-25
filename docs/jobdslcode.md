@@ -20,8 +20,9 @@ job definition for creating a new job is following:
 | description   | job description   | also may contain HTML; rendered when configured in Jenkins   |
 | type          | type of job       | supported: MULTIBRANCH_PIPELINE (default) or PIPELINE        |
 | source        | source url        | git is supported only (ssh or https variant of url to clone) |
-| credentialsId | Id of credentials | optional; Jenkins credentials store for SSH credentials      |
+| credentialsId | Id of credentials | *optional*; Jenkins credentials store for SSH credentials    |
 | script        | Jenkinsfile path  | path and filename of Jenkinsfile (default: Jenkinsfile)      |
+| history       | number of builds  | *pipeline only*; how many old builds to keep (default: 30)   |
 
 
 ## Example with JSON

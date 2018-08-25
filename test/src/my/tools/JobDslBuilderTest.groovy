@@ -40,6 +40,7 @@ class JobDslBuilderTest {
             .setSource('https://github.com/Nachtfeuer/jenkins-shared-library.git')
             .setCredentialsId('GIT_CREDENTIALS_ID')
             .setScriptPath('Jenkinsfile')
+            .setHistory(100)
             .build()
 
         assertThat(dslCode).contains("pipelineJob('demo')")
@@ -47,5 +48,6 @@ class JobDslBuilderTest {
         assertThat(dslCode).contains("credentials('GIT_CREDENTIALS_ID')")
         assertThat(dslCode).contains("url('https://github.com/Nachtfeuer/jenkins-shared-library.git')")
         assertThat(dslCode).contains("scriptPath('Jenkinsfile')")
+        assertThat(dslCode).contains('logRotator { numToKeep(100) }')
     }
 }

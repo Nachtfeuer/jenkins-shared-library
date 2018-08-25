@@ -20,6 +20,8 @@ final class JobDslBuilder {
     private String theCredentialsId = ''
     /** final relative path and filename of Jenkinsfile */
     private String theScriptPath
+    /** final number of builds to keep in history list */
+    private Integer theHistory = 30
 
     /**
      * Changing the job type.
@@ -88,6 +90,17 @@ final class JobDslBuilder {
     }
 
     /**
+     * Changing the number of entries in the build history.
+     *
+     * @param history number of entries in the build history.
+     * @return builder itself for further operations
+     */
+    JobDslBuilder setHistory(final Integer history) {
+        this.theHistory = history
+        this
+    }
+
+    /**
      * Create Job DSL code depending on type.
      * @return Job DSL code
      */
@@ -137,7 +150,7 @@ final class JobDslBuilder {
                 scriptPath('${this.theScriptPath}')
             }}
 
-            logRotator { numToKeep(30) }
+            logRotator { numToKeep(${this.theHistory}) }
         }
         """
     }
