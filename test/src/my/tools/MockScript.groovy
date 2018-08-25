@@ -76,5 +76,16 @@ class MockScript {
             null
         }
     }
+
+    /** mock of the readYaml DSL function. */
+    Map readYaml(final Map config) {
+        this.calls.add(['readYaml', config])
+
+        if (this.provides) {
+            this.provides.pop()
+        } else {
+            null
+        }
+    }
 }
 

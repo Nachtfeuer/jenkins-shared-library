@@ -9,7 +9,7 @@ and/or updating of Jenkins jobs and views. This library adds now
 functionality to read a job description via Map (in Memory),
 a JSON file or a YAML file generating Job DSL code.
 
-## Working Example with JSON
+## Example with JSON
 
 ```groovy
 @Library('jenkins-shared-library@master')
@@ -37,6 +37,40 @@ pipeline {
             steps {
                 script {
                     jobDsl(scriptText:jobDslCode.fromJson('demo.json))
+                }
+            }
+        }
+    }
+}
+```
+
+## Example with YAML
+
+```groovy
+@Library('jenkins-shared-library@master')
+
+pipeline {
+    agent any
+    stages {
+        stage('Prepare') {
+            steps {
+                script {
+                    final DATA = [
+                        type:'MULTIBRANCH_PIPELINE',
+                        name:'jenkins-shared-library-demo',
+                        description:'a Jenkins shared library',
+                        source:'https://github.com/Nachtfeuer/jenkins-shared-library.git',
+                        script:'Jenkinsfile',
+                    ]
+                    writeJSON(file:'demo.yaml', data:DATA)
+                }
+            }
+        }
+
+        stage('Job DSL') {
+            steps {
+                script {
+                    jobDsl(scriptText:jobDslCode.fromYaml('demo.yaml'))
                 }
             }
         }

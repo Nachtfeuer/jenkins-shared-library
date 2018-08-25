@@ -17,7 +17,24 @@ class JobDslConverter extends Base {
      * @return Job DSL code
      */
     String fromJson(final String jsonPathAndFilename) {
-        def jobDefinition = this.script.readJSON(file:jsonPathAndFilename)
+        JobDslConverter.fromMap(this.script.readJSON(file:jsonPathAndFilename))
+    }
+
+    /**
+     * Generating Job DSL code from a YAML file representing on job.
+     * @param yamlPathAndFilename path and filename of YAML file.
+     * @return Job DSL code
+     */
+    String fromYaml(final String yamlPathAndFilename) {
+        JobDslConverter.fromMap(this.script.readYaml(file:yamlPathAndFilename))
+    }
+
+    /**
+     * generting Job DSL code from a Map
+     * @param jobDefinition Map with fields as a job definition.
+     * @return Job DSL code
+     */
+    private static String fromMap(final Map jobDefinition) {
         def builder = new JobDslBuilder()
         jobDefinition.each {
             key, value ->

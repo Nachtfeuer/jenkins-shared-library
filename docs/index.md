@@ -35,6 +35,7 @@ downloaded and used. The basic requirements can be easily seen in the file
 ## Useful links
 
  - <https://jenkins.io/doc/book/pipeline/syntax/>
+ - <https://jenkins.io/doc/pipeline/steps/pipeline-utility-steps/>
  - <https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline>
  - <https://jenkins.io/doc/book/pipeline/docker/>
  - <https://jenkins.io/doc/pipeline/steps/>
