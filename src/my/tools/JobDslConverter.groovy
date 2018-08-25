@@ -12,24 +12,6 @@ class JobDslConverter extends Base {
     }
 
     /**
-     * Generating Job DSL code from a JSON file representing on job.
-     * @param jsonPathAndFilename path and filename of JSON file.
-     * @return Job DSL code
-     */
-    String fromJson(final String jsonPathAndFilename) {
-        JobDslConverter.fromMap(this.script.readJSON(file:jsonPathAndFilename))
-    }
-
-    /**
-     * Generating Job DSL code from a YAML file representing on job.
-     * @param yamlPathAndFilename path and filename of YAML file.
-     * @return Job DSL code
-     */
-    String fromYaml(final String yamlPathAndFilename) {
-        JobDslConverter.fromMap(this.script.readYaml(file:yamlPathAndFilename))
-    }
-
-    /**
      * generting Job DSL code from a Map
      * @param jobDefinition Map with fields as a job definition.
      * @return Job DSL code
@@ -49,4 +31,23 @@ class JobDslConverter extends Base {
         }
         builder.build()
     }
+
+    /**
+     * Generating Job DSL code from a JSON file representing on job.
+     * @param jsonPathAndFilename path and filename of JSON file.
+     * @return Job DSL code
+     */
+    String fromJson(final String jsonPathAndFilename) {
+        JobDslConverter.fromMap(this.script.readJSON(file:jsonPathAndFilename))
+    }
+
+    /**
+     * Generating Job DSL code from a YAML file representing on job.
+     * @param yamlPathAndFilename path and filename of YAML file.
+     * @return Job DSL code
+     */
+    String fromYaml(final String yamlPathAndFilename) {
+        JobDslConverter.fromMap(this.script.readYaml(file:yamlPathAndFilename))
+    }
+
 }
