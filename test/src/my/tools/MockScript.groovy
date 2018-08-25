@@ -12,6 +12,8 @@ class MockScript {
     private final String currentPath = System.getProperty('user.dir')
     /** status of current build and the description */
     private final Map currentBuild = [result:null, description:'']
+    /** Stack with return values */
+    private final Stack provides = []
 
     /** readonly access to list off calls. **/
     def getCalls() {
@@ -21,6 +23,11 @@ class MockScript {
     /** access to current build */
     def getCurrentBuild() {
         this.currentBuild
+    }
+
+    /** add an entry to provide as return value for some DSL calls */
+    void provide(final obj) {
+        this.provides.add(obj)
     }
 
     /** mock of the Jenkins sh DSL function. */
@@ -50,12 +57,35 @@ class MockScript {
     }
 
     /** mock of the junit DSL function. */
-    def junit(final Map config) {
+    void junit(final Map config) {
         this.calls.add(['junit', config])
     }
 
     /** mock of the jacoco DSL function. */
-    def jacoco() {
+    void jacoco() {
         this.calls.add(['jacoco'])
     }
+
+    /** mock of the readJSON DSL function. */
+    Map readJSON(final Map config) {
+        this.calls.add(['readJSON', config])
+
+        if (this.provides) {
+            this.provides.pop()
+        } else {
+            null
+        }
+    }
+
+    /** mock of the readYaml DSL function. */
+    Map readYaml(final Map config) {
+        this.calls.add(['readYaml', config])
+
+        if (this.provides) {
+            this.provides.pop()
+        } else {
+            null
+        }
+    }
 }
+

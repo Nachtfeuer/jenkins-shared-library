@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [{
+        "label": "Gradle - Build (clean + check)",
+        "type": "shell",
+        "group": "build",
+        "command": "gradle",
+        "args": [ "clean", "build" ]
+    }, {
+        "label": "Gradle - continuous testing",
+        "type": "shell",
+        "group": "build",
+        "command": "gradle",
+        "args": [ "test", "-it" ]
+    }, {
+        "label": "Mkdocs - build documentation",
+        "type": "shell",
+        "group": "build",
+        "command": "mkdocs",
+        "args": ["build"]
+    }, {
+        "label": "Mkdocs - view documentation",
+        "type": "shell",
+        "group": "build",
+        "command": "mkdocs",
+        "args": ["serve"]
+    }]
+}
