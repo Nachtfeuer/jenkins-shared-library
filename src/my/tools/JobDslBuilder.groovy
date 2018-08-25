@@ -128,7 +128,7 @@ final class JobDslBuilder {
 
             definition { cpsScm { scm {
                 git {
-                    branch('**')
+                    branch('')
                     remote {
                         url('${this.theSource}')
                         credentials('${this.theCredentialsId}')
