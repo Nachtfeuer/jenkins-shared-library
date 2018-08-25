@@ -94,6 +94,7 @@ final class JobDslBuilder {
     String build() {
         final MAP = [:]
         MAP.put(JobDslType.MULTIBRANCH_PIPELINE) { this.buildMultiBranchPipeline() }
+        MAP.put(JobDslType.PIPELINE) { this.buildPipeline() }
         MAP.get(this.theType)()
     }
 
@@ -106,11 +107,37 @@ final class JobDslBuilder {
         multibranchPipelineJob('${this.theName}') {
             description('${this.theDescription}')
             branchSources { git {
-                remote('${theSource}')
-                credentialsId('${theCredentialsId}')
+                remote('${this.theSource}')
+                credentialsId('${this.theCredentialsId}')
             } }
             factory { workflowBranchProjectFactory { scriptPath('${this.theScriptPath}') } }
             orphanedItemStrategy { discardOldItems { numToKeep(0) }}
+        }
+        """
+    }
+
+    /**
+     * Creating Job DSL code for a for a pipeline.
+     * @return Job DSL code
+     */
+    private String buildPipeline() {
+        """
+        pipelineJob('${this.theName}') {
+            description('${this.theDescription}')
+            concurrentBuild(false)
+
+            definition { cpsScm { scm {
+                git {
+                    branch('**')
+                    remote {
+                        url('${this.theSource}')
+                        credentials('${this.theCredentialsId}')
+                    }
+                }}
+                scriptPath('${this.theScriptPath}')
+            }}
+
+            logRotator { numToKeep(30) }
         }
         """
     }
