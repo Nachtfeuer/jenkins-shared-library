@@ -8,7 +8,7 @@
   
   <meta name="author" content="Thomas Lehmann <thomas.lehmann.private@gmail.com">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Python virtual environments - jenkins-shared-library</title>
+  <title>Job DSL code support - jenkins-shared-library</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Python virtual environments";
-    var mkdocs_page_input_path = "virtualenv.md";
-    var mkdocs_page_url = "/jenkins-shared-library/virtualenv/";
+    var mkdocs_page_name = "Job DSL code support";
+    var mkdocs_page_input_path = "jobdslcode.md";
+    var mkdocs_page_url = "/jenkins-shared-library/jobdslcode/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -72,20 +72,20 @@
 		
     <span class="caption-text">DSL</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Python virtual environments</a>
-    <ul class="subnav">
-            
-    </ul>
+    <a class="" href="../virtualenv/">Python virtual environments</a>
                 </li>
                 <li class="">
                     
     <a class="" href="../xgradle/">Own Gradle DSL</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../jobdslcode/">Job DSL code support</a>
+    <a class="current" href="./">Job DSL code support</a>
+    <ul class="subnav">
+            
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -116,10 +116,10 @@
         
       
     
-    <li>Python virtual environments</li>
+    <li>Job DSL code support</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/Nachtfeuer/jenkins-shared-library/edit/master/docs/virtualenv.md"
+        <a href="https://github.com/Nachtfeuer/jenkins-shared-library/edit/master/docs/jobdslcode.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -129,44 +129,136 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="python-virtual-environments">Python virtual environments</h1>
+                <h1 id="job-dsl-code-support">Job DSL code support</h1>
 <div class="toc">
 <ul>
-<li><a href="#python-virtual-environments">Python virtual environments</a><ul>
-<li><a href="#most-simple-usage">Most simple usage</a></li>
-<li><a href="#passing-requirements">Passing requirements</a></li>
-<li><a href="#defining-another-virtual-environment-folder">Defining another virtual environment folder</a></li>
-<li><a href="#error-handling">Error handling</a></li>
+<li><a href="#job-dsl-code-support">Job DSL code support</a><ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#job-definition">Job definition</a></li>
+<li><a href="#example-with-json">Example with JSON</a></li>
+<li><a href="#example-with-yaml">Example with YAML</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<h2 id="most-simple-usage">Most simple usage</h2>
-<pre><code class="groovy">virtualenv {
-    sh(script:'python -m install spline')
-    sh(script:'python -m spline.application --help')
+<h2 id="purpose">Purpose</h2>
+<p>Job DSL is great Jenkins pluging offering you an API for creating
+and/or updating of Jenkins jobs and views. This library adds now
+functionality to read a job description via Map (in Memory),
+a JSON file or a YAML file generating Job DSL code.</p>
+<h2 id="job-definition">Job definition</h2>
+<p>Independent whether you use a Map in memory, a JSON file or a yaml file the
+job definition for creating a new job is following:</p>
+<table>
+<thead>
+<tr>
+<th>field</th>
+<th>meaning</th>
+<th>comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>name of the job</td>
+<td>an existing job with will be update if it is of same type</td>
+</tr>
+<tr>
+<td>description</td>
+<td>job description</td>
+<td>also may contain HTML; rendered when configured in Jenkins</td>
+</tr>
+<tr>
+<td>type</td>
+<td>type of job</td>
+<td>supported: MULTIBRANCH_PIPELINE (default) or PIPELINE</td>
+</tr>
+<tr>
+<td>source</td>
+<td>source url</td>
+<td>git is supported only (ssh or https variant of url to clone)</td>
+</tr>
+<tr>
+<td>credentialsId</td>
+<td>Id of credentials</td>
+<td><em>optional</em>; Jenkins credentials store for SSH credentials</td>
+</tr>
+<tr>
+<td>script</td>
+<td>Jenkinsfile path</td>
+<td>path and filename of Jenkinsfile (default: Jenkinsfile)</td>
+</tr>
+<tr>
+<td>history</td>
+<td>number of builds</td>
+<td><em>pipeline only</em>; how many old builds to keep (default: 30)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example-with-json">Example with JSON</h2>
+<pre><code class="groovy">@Library('jenkins-shared-library@master')
+import groovy.json.JsonOutput
+
+pipeline {
+    agent any
+    stages {
+        stage('Prepare') {
+            steps {
+                script {
+                    final DATA = readJSON(text:groovy.json.JsonOutput.toJson([
+                        type:'MULTIBRANCH_PIPELINE',
+                        name:'jenkins-shared-library-demo',
+                        description:'a Jenkins shared library',
+                        source:'https://github.com/Nachtfeuer/jenkins-shared-library.git',
+                        script:'Jenkinsfile',
+                    ]))
+                    writeJSON(file:'demo.json', json:DATA)
+                }
+            }
+        }
+
+        stage('Job DSL') {
+            steps {
+                script {
+                    jobDsl(scriptText:jobDslCode.fromJson('demo.json))
+                }
+            }
+        }
+    }
 }
 </code></pre>
 
-<h2 id="passing-requirements">Passing requirements</h2>
-<pre><code class="groovy">virtualenv(['spline', 'requests==2.12.4']) {
-    sh(script:'python -m spline.application --help')
+<h2 id="example-with-yaml">Example with YAML</h2>
+<pre><code class="groovy">@Library('jenkins-shared-library@master')
+
+pipeline {
+    agent any
+    stages {
+        stage('Prepare') {
+            steps {
+                script {
+                    final DATA = [
+                        type:'MULTIBRANCH_PIPELINE',
+                        name:'jenkins-shared-library-demo',
+                        description:'a Jenkins shared library',
+                        source:'https://github.com/Nachtfeuer/jenkins-shared-library.git',
+                        script:'Jenkinsfile',
+                    ]
+                    writeYaml(file:'demo.yaml', data:DATA)
+                }
+            }
+        }
+
+        stage('Job DSL') {
+            steps {
+                script {
+                    jobDsl(scriptText:jobDslCode.fromYaml('demo.yaml'))
+                }
+            }
+        }
+    }
 }
 </code></pre>
-
-<h2 id="defining-another-virtual-environment-folder">Defining another virtual environment folder</h2>
-<pre><code class="groovy">virtualenv(['spline', 'requests==2.12.4'], 'another-venv') {
-    sh(script:'python -m spline.application --help')
-}
-</code></pre>
-
-<h2 id="error-handling">Error handling</h2>
-<p>When inside a virtual environment an exception is thrown:</p>
-<ul>
-<li>the result of such a block is <strong>null</strong>.</li>
-<li>the pipeline state (currentBuild.result) will be set to 'FAILURE'.</li>
-<li>the virtual environment will be removed independent of that issue.</li>
-</ul>
               
             </div>
           </div>
@@ -174,10 +266,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../xgradle/" class="btn btn-neutral float-right" title="Own Gradle DSL">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../gradle/" class="btn btn-neutral" title="How to organize Gradle"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../xgradle/" class="btn btn-neutral" title="Own Gradle DSL"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -205,10 +295,8 @@
           <a href="https://github.com/Nachtfeuer/jenkins-shared-library/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../gradle/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../xgradle/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../xgradle/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
