@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Prepare') {
             steps { script {
-                currentBuild.description = "commit: ${git.shortCommit}, last author: ${git.authorName}"
+                currentBuild.description = "commit: ${xgit.shortCommit}, last author: ${xgit.authorName}"
             }}
         }
 
