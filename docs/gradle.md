@@ -50,9 +50,8 @@ zipStorePath=wrapper/dists
    as proposed by Maven/Gradle. The name of the languages (here: groovy) has been removed from the paths.
  - You are not advised to use **vars** in the source sets because you cannot test the code and
    you code coverage would essentially decrease.
- - **Jacoco** is used as official documented. Here 1.0 is adjusted as code coverage limit means 100%
-   code coverage is expected. Adding new functionality without adding sufficient tests will fail
-   the build.
+ - **Jacoco** is used as official documented. Code coverage should be above 85% (line coverage 100%).
+   Adding new functionality without adding sufficient tests should fail the build.
  - **Codenarc** is the static code analyser for Groovy. Most rules are used and located under
    `config/codenarc/codenarc.rules`. Every rule that is not correct applied will fail the build.
  - **Coveralls** (a great service for visualizing code coverage results) is useful if you run your
