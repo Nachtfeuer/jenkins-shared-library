@@ -12,6 +12,6 @@ nav:
       - virtualenv.md
       - xgradle.md
       - jobdslcode.md
-      - git.md
+      - xgit.md
 
 theme: readthedocs
