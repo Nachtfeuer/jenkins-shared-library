@@ -12,19 +12,21 @@ pipeline {
     }
 
     stages {
+        stage('Prepare') {
+            steps { script {
+                currentBuild.description = "commit: ${xgit.shortCommit}, last author: ${xgit.authorName}"
+            }}
+        }
+
         stage('Build') {
-            steps {
-                script {
-                    xgradle.build()
-                }
-            }
+            steps { script {
+                xgradle.build()
+            }}
 
             post {
-                always {
-                    script {
-                        xgradle.publish()
-                    }
-                }
+                always { script {
+                    xgradle.publish()
+                }}
             }
         }
     }
