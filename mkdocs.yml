@@ -13,5 +13,6 @@ nav:
       - xgradle.md
       - jobdslcode.md
       - xgit.md
+      - xpublish.md
 
 theme: readthedocs

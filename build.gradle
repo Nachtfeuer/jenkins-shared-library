@@ -9,6 +9,9 @@ apply plugin: 'codenarc'
 apply plugin: 'jacoco'
 apply plugin: 'nebula.lint'
 
+group="$group"
+version="$version"
+
 sourceSets {
     main {
         groovy {
@@ -60,6 +63,7 @@ jacocoTestCoverageVerification {
         }
     }
 }
+
 
 pitest {
     pitestVersion = '1.4.2'

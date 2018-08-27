@@ -36,6 +36,8 @@ class Gradle extends Base {
     Gradle publish() {
         this.script.junit(testResults:'**/TEST*.xml')
         this.script.jacoco()
+        this.script.xpublish.html('HTML Code Coverage', 'build/reports/coverage')
         this
     }
+
 }
