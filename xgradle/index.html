@@ -103,6 +103,10 @@
                     
     <a class="" href="../xgit/">Git DSL</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../xpublish/">The publisher</a>
+                </li>
     </ul>
 	    </li>
           
@@ -157,13 +161,19 @@ chaining the tasks <strong>clean</strong> and <strong>check</strong>:</p>
 <pre><code class="groovy">xgradle.build()
 </code></pre>
 
-<p><strong>Please note</strong>: In a declarative pipeline you have to place it in a <code>script { ... }</code>.</p>
+<p><strong>Please note</strong>: In a declarative pipeline you have to place it in a <code>script { ... }</code> block.</p>
 <h1 id="publish">Publish</h1>
-<p>Publishing of build results (junit, jacoco, ...):</p>
+<p>Publishing of build results (junit, jacoco, HTML coverage and Pit test coverage):</p>
 <pre><code class="groovy">xgradle.publish()
 </code></pre>
 
-<p><strong>Please note</strong>: In a declarative pipeline you have to place it in a <code>script { ... }</code>.</p>
+<p><strong>Please note</strong>:
+ - In a declarative pipeline you have to place it in a <code>script { ... }</code> block.
+ - The reports are published only when the path do exist; for coverage
+   <code>build/reports/coverage</code> and for pit test <code>build/reports/pitest</code>
+   are the expected paths. Using <strong>Jacoco</strong> you can configure it with
+   <code>html.destination file("${buildDir}/reports/coverage")</code>.
+   You can check the file <code>build.gradle</code> of this project.</p>
               
             </div>
           </div>
