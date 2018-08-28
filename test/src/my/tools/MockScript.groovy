@@ -14,6 +14,12 @@ class MockScript {
     private final Map currentBuild = [result:null, description:'']
     /** Stack with return values */
     private final Stack provides = []
+    /** publish DSL instance **/
+    private final publish = [:]
+
+    MockScript() {
+        this.publish.put('html') { title, path, mainFile='index.html' -> this.publishHtml(title, path, mainFile) }
+    }
 
     /** readonly access to list off calls. **/
     def getCalls() {
@@ -28,6 +34,11 @@ class MockScript {
     /** add an entry to provide as return value for some DSL calls */
     void provide(final obj) {
         this.provides.add(obj)
+    }
+
+    /** mock own publish DSL **/
+    Map getXpublish() {
+        this.publish.asImmutable()
     }
 
     /** mock of the Jenkins sh DSL function. */
@@ -92,6 +103,15 @@ class MockScript {
         } else {
             null
         }
+    }
+
+    /**
+    * @param title title of the HTML report.
+    * @param path releative path where the HTML report is located.
+    * @param mainFile main HTML file (default: index.html)
+    */
+    private void publishHtml(final String title, final String path, final String mainFile='index.html') {
+        this.calls.add(['xpublish.html', title, path, mainFile])
     }
 }
 
