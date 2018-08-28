@@ -42,10 +42,12 @@ class GradleTest {
         def gradle = new Gradle(script)
 
         assertThat(gradle.publish()).isSameAs(gradle)
-        assertThat(script.calls.size()).isEqualTo(3)
+        assertThat(script.calls.size()).isEqualTo(4)
         assertThat(script.calls.get(0)).isEqualTo(['junit', [testResults:'**/TEST*.xml']])
         assertThat(script.calls.get(1)).isEqualTo(['jacoco'])
         assertThat(script.calls.get(2)).isEqualTo(
             ['xpublish.html', 'HTML Code Coverage', 'build/reports/coverage', 'index.html'])
+        assertThat(script.calls.get(3)).isEqualTo(
+            ['xpublish.html', 'HTML Pit Test Coverage', 'build/reports/pitest', 'index.html'])
     }
 }
