@@ -5,6 +5,7 @@ Useful functionality for a Jenkins shared pipeline
 [![Coverage Status](https://coveralls.io/repos/github/Nachtfeuer/jenkins-shared-library/badge.svg?branch=master)](https://coveralls.io/github/Nachtfeuer/jenkins-shared-library?branch=master)
 [![GitHub license](https://img.shields.io/github/license/Nachtfeuer/jenkins-shared-library.svg)](https://github.com/Nachtfeuer/jenkins-shared-library/blob/master/LICENSE)
 [![Documentation](https://img.shields.io/badge/documentation-ok-brightgreen.svg)](https://nachtfeuer.github.io/jenkins-shared-library/)
+[![CodeFactor](https://www.codefactor.io/repository/github/nachtfeuer/jenkins-shared-library/badge)](https://www.codefactor.io/repository/github/nachtfeuer/jenkins-shared-library)
 
 ## Build the project
 
