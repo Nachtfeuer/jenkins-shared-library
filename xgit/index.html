@@ -89,11 +89,24 @@
     <a class="current" href="./">Git DSL</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#git-dsl">Git DSL</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#usage">Usage</a></li>
+        
+        </ul>
+    
+
     </ul>
                 </li>
                 <li class="">
                     
     <a class="" href="../xpublish/">The publisher</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../xfind/">Find DSL</a>
                 </li>
     </ul>
 	    </li>
@@ -138,20 +151,15 @@
             <div class="section">
               
                 <h1 id="git-dsl">Git DSL</h1>
-<div class="toc">
-<ul>
-<li><a href="#git-dsl">Git DSL</a><ul>
-<li><a href="#usage">Usage</a></li>
-</ul>
-</li>
-</ul>
-</div>
 <h2 id="usage">Usage</h2>
 <pre><code class="groovy">echo('Git short commit: ' + xgit.shortCommit)
 echo('Git url: ' + xgit.url)
 echo('Git author name: ' + xgit.authorName)
 echo('Git author mail: ' + xgit.authorMail)
 </code></pre>
+
+<p><strong>Please note</strong>:
+ - In a declarative pipeline you have to place it in a <code>script { ... }</code> block.</p>
               
             </div>
           </div>

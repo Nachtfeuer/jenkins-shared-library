@@ -8,7 +8,7 @@
   
   <meta name="author" content="Thomas Lehmann <thomas.lehmann.private@gmail.com">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Python virtual environments - jenkins-shared-library</title>
+  <title>Find DSL - jenkins-shared-library</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Python virtual environments";
-    var mkdocs_page_input_path = "virtualenv.md";
-    var mkdocs_page_url = "/jenkins-shared-library/virtualenv/";
+    var mkdocs_page_name = "Find DSL";
+    var mkdocs_page_input_path = "xfind.md";
+    var mkdocs_page_url = "/jenkins-shared-library/xfind/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -72,12 +72,9 @@
 		
     <span class="caption-text">DSL</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Python virtual environments</a>
-    <ul class="subnav">
-            
-    </ul>
+    <a class="" href="../virtualenv/">Python virtual environments</a>
                 </li>
                 <li class="">
                     
@@ -95,9 +92,21 @@
                     
     <a class="" href="../xpublish/">The publisher</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../xfind/">Find DSL</a>
+    <a class="current" href="./">Find DSL</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#find-dsl">Find DSL</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#how-to-use">How to use?</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -128,10 +137,10 @@
         
       
     
-    <li>Python virtual environments</li>
+    <li>Find DSL</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/Nachtfeuer/jenkins-shared-library/edit/master/docs/virtualenv.md"
+        <a href="https://github.com/Nachtfeuer/jenkins-shared-library/edit/master/docs/xfind.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -141,44 +150,14 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="python-virtual-environments">Python virtual environments</h1>
-<div class="toc">
-<ul>
-<li><a href="#python-virtual-environments">Python virtual environments</a><ul>
-<li><a href="#most-simple-usage">Most simple usage</a></li>
-<li><a href="#passing-requirements">Passing requirements</a></li>
-<li><a href="#defining-another-virtual-environment-folder">Defining another virtual environment folder</a></li>
-<li><a href="#error-handling">Error handling</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<h2 id="most-simple-usage">Most simple usage</h2>
-<pre><code class="groovy">virtualenv {
-    sh(script:'python -m install spline')
-    sh(script:'python -m spline.application --help')
-}
+                <h1 id="find-dsl">Find DSL</h1>
+<h2 id="how-to-use">How to use?</h2>
+<pre><code class="groovy">def files = xfind.files('.', '*.json')
 </code></pre>
 
-<h2 id="passing-requirements">Passing requirements</h2>
-<pre><code class="groovy">virtualenv(['spline', 'requests==2.12.4']) {
-    sh(script:'python -m spline.application --help')
-}
-</code></pre>
-
-<h2 id="defining-another-virtual-environment-folder">Defining another virtual environment folder</h2>
-<pre><code class="groovy">virtualenv(['spline', 'requests==2.12.4'], 'another-venv') {
-    sh(script:'python -m spline.application --help')
-}
-</code></pre>
-
-<h2 id="error-handling">Error handling</h2>
-<p>When inside a virtual environment an exception is thrown:</p>
-<ul>
-<li>the result of such a block is <strong>null</strong>.</li>
-<li>the pipeline state (currentBuild.result) will be set to 'FAILURE'.</li>
-<li>the virtual environment will be removed independent of that issue.</li>
-</ul>
+<p>The command is equivalent to <code>find . -type f -name "*.json"</code>.</p>
+<p><strong>Please note</strong>:
+ - In a declarative pipeline you have to place it in a <code>script { ... }</code> block.</p>
               
             </div>
           </div>
@@ -186,10 +165,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../xgradle/" class="btn btn-neutral float-right" title="Own Gradle DSL">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../gradle/" class="btn btn-neutral" title="How to organize Gradle"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../xpublish/" class="btn btn-neutral" title="The publisher"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -217,10 +194,8 @@
           <a href="https://github.com/Nachtfeuer/jenkins-shared-library/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../gradle/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../xpublish/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../xgradle/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
