@@ -14,5 +14,6 @@ nav:
       - jobdslcode.md
       - xgit.md
       - xpublish.md
+      - xfind.md
 
 theme: readthedocs
