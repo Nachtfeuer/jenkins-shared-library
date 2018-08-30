@@ -17,7 +17,7 @@
         "type": "shell",
         "group": "build",
         "command": "gradle",
-        "args": [ "relase", "-Prelease.disableChecks", "-Prelease.pushTagsOnly"]
+        "args": [ "release", "-Prelease.disableChecks", "-Prelease.pushTagsOnly"]
     }, {
         "label": "Mkdocs - build documentation",
         "type": "shell",

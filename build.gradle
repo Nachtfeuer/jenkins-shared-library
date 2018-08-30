@@ -14,6 +14,11 @@ group="$group"
 version = scmVersion.version
 
 scmVersion {
+    repository {
+        customKey = System.env.GIT_USR
+        customKeyPassword = System.env.GIT_PSW
+    }
+
     tag {
         prefix = 'release'
     }
