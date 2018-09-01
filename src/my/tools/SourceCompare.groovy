@@ -75,7 +75,9 @@ class SourceCompare {
                 if (duplicateLines >= this.minimumBlockSize) {
                     results.add([indices:[leftPosition, rightPosition], blockSize:duplicateLines])
                     rightPosition += duplicateLines
-                    offset += duplicateLines
+                    if (offset == 0) {
+                        offset += duplicateLines
+                    }
                 } else {
                     ++rightPosition
                 }

@@ -76,6 +76,11 @@ jacocoTestCoverageVerification {
     }
 }
 
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
 
 pitest {
     pitestVersion = '1.4.2'
@@ -92,6 +97,7 @@ repositories {
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.10'
     testCompile 'junit:junit:4.12'
+    testCompile 'pl.pragmatists:JUnitParams:1.1.1'
     testCompile 'org.assertj:assertj-core:3.11.0'
 }
 

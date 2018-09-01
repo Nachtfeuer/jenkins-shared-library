@@ -40,26 +40,13 @@ class SourceCompareTest {
         assertThat(results.get(1)).isEqualTo([indices:[3, 2], blockSize:2])
     }
 
-    /** Testing of method {@link SourceCompare#compareSources}. */
-    @Test
-    void testCompareSourcesWithExactMatchAndMoreThanOneDuplicateInverse() {
-        def results = new SourceCompare()
-            .setSources(testSources.two, testSources.three)
-            .setMinimumBlockSize(2)
-            .compareSources()
-        assertThat(results.size()).isEqualTo(2)
-        assertThat(results.get(0)).isEqualTo([indices:[0, 2], blockSize:3])
-        assertThat(results.get(1)).isEqualTo([indices:[3, 0], blockSize:2])
-    }
-
     /**
      * Different tests sources to compare.
      */
     private Map getTestSources() {
         [
             one:'''green\nblue\nlight\ndark''',
-            two:'''green\nblue\nred\nlight\ndark''',
-            three:'''light\ndark\ngreen\nblue\nred''',
+            two:'''green\nblue\nred\nlight\ndark'''
         ]
     }
 }
