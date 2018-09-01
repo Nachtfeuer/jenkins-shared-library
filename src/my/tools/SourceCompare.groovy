@@ -62,7 +62,6 @@ class SourceCompare {
      *
      * @return list of information about duplicates (if given)
      */
-    @SuppressWarnings('NestedForLoop')
     List compareSources() {
         def results = []
 

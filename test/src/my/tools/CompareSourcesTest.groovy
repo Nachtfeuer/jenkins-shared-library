@@ -29,21 +29,22 @@ class CompareSourcesTest {
     /**
      * @return list of different test setups.
      */
-    def parametersForTestCompareSources() {
+    @SuppressWarnings('UnusedPrivateMethod')
+    private parametersForTestCompareSources() {
         [[
             sources:['green\nblue\nlight\ndark', 'light\ndark\ngreen\nblue'],
             minimumBlockSize:4,
             expectedResults:[]
         ], [
-            sources: ['green\nblue\nlight\ndark', 'light\ndark\ngreen\nblue'],
+            sources:['green\nblue\nlight\ndark', 'light\ndark\ngreen\nblue'],
             minimumBlockSize:2,
             expectedResults:[
-                [indices:[0, 2], blockSize: 2], [indices:[2, 0], blockSize: 2]]
+                [indices:[0, 2], blockSize:2], [indices:[2, 0], blockSize:2]]
         ], [
             sources:['green\nblue\nlight\ndark', 'light\ndark\ngreen\nblue\ngreen\nblue'],
             minimumBlockSize:2,
             expectedResults:[
-                [indices:[0, 2], blockSize: 2], [indices:[0, 4], blockSize: 2], [indices:[2, 0], blockSize: 2]]
+                [indices:[0, 2], blockSize:2], [indices:[0, 4], blockSize:2], [indices:[2, 0], blockSize:2]]
         ]]
     }
 }
