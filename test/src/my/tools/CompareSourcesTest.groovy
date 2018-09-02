@@ -24,6 +24,7 @@ class CompareSourcesTest {
             .setMinimumBlockSize(config.minimumBlockSize ?: 4)
             .setIgnoreCase(config.ignoreCase ?: false)
             .setIgnoreWhitespaces(config.ignoreWhitespaces ?: false)
+            .setPercentageSimilarity(config.percentageSimilarity ?: 100.0)
             .compareSources()
         assertThat(results.toString()).isEqualTo(config.expectedResults.toString())
     }
@@ -58,6 +59,12 @@ class CompareSourcesTest {
             minimumBlockSize:2,
             ignoreCase:true,
             ignoreWhitespaces:true,
+            expectedResults:[
+                [indices:[0, 2], blockSize:2], [indices:[2, 0], blockSize:2]]
+        ], [
+            sources:['gruen\nblau\nlicht\ndark\ndunkel', 'light\ndark\ngreen\nblue'],
+            minimumBlockSize:2,
+            percentageSimilarity:50.0,
             expectedResults:[
                 [indices:[0, 2], blockSize:2], [indices:[2, 0], blockSize:2]]
         ]]

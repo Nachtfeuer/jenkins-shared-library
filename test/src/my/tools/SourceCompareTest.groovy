@@ -11,42 +11,24 @@ class SourceCompareTest {
     @Test
     void testDuplicateLinesExactMatch() {
         def sc = new SourceCompare()
-            .setSources(testSources.one, testSources.one)
+            .setSources('''green\nblue\nlight\ndark''', '''green\nblue\nlight\ndark''')
         assertThat(sc.countDuplicateLines(0, 0)).isEqualTo(4)
         assertThat(sc.countDuplicateLines(2, 2)).isEqualTo(2)
         assertThat(sc.countDuplicateLines(0, 2)).isEqualTo(0)
     }
 
-    /** Testing of method {@link SourceCompare#compareSources}. */
+    /** Testing of method {@link SourceCompare#setPercentageSimlarity(double)}. */
     @Test
-    void testCompareSourcesWithExactMatch() {
-        def results = new SourceCompare()
-            .setSources(testSources.one, testSources.one)
-            .setMinimumBlockSize(1)
-            .compareSources()
-        assertThat(results.size()).isEqualTo(1)
-        assertThat(results.get(0)).isEqualTo([indices:[0, 0], blockSize:4])
-    }
+    void testPercentageSimilarityPolicies() {
+        def sc = new SourceCompare()
 
-    /** Testing of method {@link SourceCompare#compareSources}. */
-    @Test
-    void testCompareSourcesWithExactMatchAndMoreThanOneDuplicate() {
-        def results = new SourceCompare()
-            .setSources(testSources.two, testSources.one)
-            .setMinimumBlockSize(2)
-            .compareSources()
-        assertThat(results.size()).isEqualTo(2)
-        assertThat(results.get(0)).isEqualTo([indices:[0, 0], blockSize:2])
-        assertThat(results.get(1)).isEqualTo([indices:[3, 2], blockSize:2])
-    }
-
-    /**
-     * Different tests sources to compare.
-     */
-    private Map getTestSources() {
-        [
-            one:'''green\nblue\nlight\ndark''',
-            two:'''green\nblue\nred\nlight\ndark'''
-        ]
+        sc.percentageSimilarity = -1.0
+        assertThat(sc.policies.percentageSimilarity).isEqualTo((double)100.0)
+        sc.percentageSimilarity = 101.0
+        assertThat(sc.policies.percentageSimilarity).isEqualTo((double)100.0)
+        sc.percentageSimilarity = 50.0
+        assertThat(sc.policies.percentageSimilarity).isEqualTo((double)50.0)
+        sc.percentageSimilarity = 0.0
+        assertThat(sc.policies.percentageSimilarity).isEqualTo((double)0.0)
     }
 }
