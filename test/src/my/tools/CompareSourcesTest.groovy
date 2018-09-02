@@ -23,6 +23,7 @@ class CompareSourcesTest {
             .setSources(config.sources[0], config.sources[1])
             .setMinimumBlockSize(config.minimumBlockSize ?: 4)
             .setIgnoreCase(config.ignoreCase ?: false)
+            .setIgnoreWhitespaces(config.ignoreWhitespaces ?: false)
             .compareSources()
         assertThat(results.toString()).isEqualTo(config.expectedResults.toString())
     }
@@ -50,6 +51,13 @@ class CompareSourcesTest {
             sources:['green\nblue\nlight\ndark', 'Light\nDark\nGreen\nBlue'],
             minimumBlockSize:2,
             ignoreCase:true,
+            expectedResults:[
+                [indices:[0, 2], blockSize:2], [indices:[2, 0], blockSize:2]]
+        ], [
+            sources:['green\nblue\nlight\ndark', ' Light \n  \t Dark \n   Green \t \n  Blue  '],
+            minimumBlockSize:2,
+            ignoreCase:true,
+            ignoreWhitespaces:true,
             expectedResults:[
                 [indices:[0, 2], blockSize:2], [indices:[2, 0], blockSize:2]]
         ]]

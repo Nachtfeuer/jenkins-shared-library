@@ -4,6 +4,8 @@ package my.tools
  * Tool to compare sources finding duplicates with a minimum block size.
  */
 class SourceCompare {
+    /** whitespace characters to remove when policy ignoreWhitespaces is set to true. */
+    private final static WHITESPACES = '[\t ]*'
     /** list of sources to compare (each source a list of lines) */
     private final List<List<String>> sources = []
     /** policies influencing comparison */
@@ -11,10 +13,12 @@ class SourceCompare {
         // minimum block size to recognize as duplicate (default: 4)
         minimumBlockSize:4,
         // when true the comparison of two lines is independent of the letter case (default: false)
-        ignoreCase:false
+        ignoreCase:false,
+        // when true, then ignoring spaces and tabs on camparisons (default: false)
+        ignoreWhitespaces:false
     ]
     /** concrete "isEqual" compare function depending on policies */
-    private isEqual = { left, right -> this.isEqualExactMatch(left, right) }
+    private final isEqual = { left, right -> this.isEqualExactMatch(left, right) }
 
     /**
      * Provide two sources to be compared.
@@ -52,6 +56,17 @@ class SourceCompare {
     }
 
     /**
+     * Change whitespaces policy.
+     *
+     * @param enabled when true then ignore whitespaces
+     * @return builder itself to allow chaining of further operations.
+     */
+    SourceCompare setIgnoreWhitespaces(final boolean enabled) {
+        this.policies.ignoreWhitespaces = enabled
+        this
+    }
+
+    /**
      * Count duplicate consecutive lines starting by given indices.
      *
      * @param leftPosition zero based index of first source
@@ -83,9 +98,7 @@ class SourceCompare {
     List compareSources() {
         def results = []
 
-        if (this.policies.ignoreCase) {
-            this.isEqual = { left, right -> this.isEqualIgnoreCase(left, right) }
-        }
+        this.transformSources()
 
         int leftPosition = 0
         while (leftPosition < this.sources[0].size()) {
@@ -109,6 +122,21 @@ class SourceCompare {
     }
 
     /**
+     * Depending on policy transform sources.
+     */
+    private void transformSources() {
+        if (this.policies.ignoreCase) {
+            this.sources[0] = this.sources[0]*.toUpperCase()
+            this.sources[1] = this.sources[1]*.toUpperCase()
+        }
+
+        if (this.policies.ignoreWhitespaces) {
+            this.sources[0] = this.sources[0]*.replaceAll(WHITESPACES, '')
+            this.sources[1] = this.sources[1]*.replaceAll(WHITESPACES, '')
+        }
+    }
+
+    /**
      * Compare two string to be identical (exact match).
      *
      * @param left first string to compare with second one.
@@ -117,16 +145,5 @@ class SourceCompare {
      */
     private boolean isEqualExactMatch(final String left, final String right) {
         left == right
-    }
-
-    /**
-     * Compare two string to be identical (ignoring letter case).
-     *
-     * @param left first string to compare with second one.
-     * @param right second string to compare with first one.
-     * @return true when both strings are identical.
-     */
-    private boolean isEqualIgnoreCase(final String left, final String right) {
-        left.equalsIgnoreCase(right)
     }
 }
