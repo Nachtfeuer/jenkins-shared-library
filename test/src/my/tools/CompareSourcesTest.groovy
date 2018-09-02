@@ -21,7 +21,8 @@ class CompareSourcesTest {
     void testCompareSources(final Map config) {
         def results = new SourceCompare()
             .setSources(config.sources[0], config.sources[1])
-            .setMinimumBlockSize(config.minimumBlockSize)
+            .setMinimumBlockSize(config.minimumBlockSize ?: 4)
+            .setIgnoreCase(config.ignoreCase ?: false)
             .compareSources()
         assertThat(results.toString()).isEqualTo(config.expectedResults.toString())
     }
@@ -45,6 +46,12 @@ class CompareSourcesTest {
             minimumBlockSize:2,
             expectedResults:[
                 [indices:[0, 2], blockSize:2], [indices:[0, 4], blockSize:2], [indices:[2, 0], blockSize:2]]
+        ], [
+            sources:['green\nblue\nlight\ndark', 'Light\nDark\nGreen\nBlue'],
+            minimumBlockSize:2,
+            ignoreCase:true,
+            expectedResults:[
+                [indices:[0, 2], blockSize:2], [indices:[2, 0], blockSize:2]]
         ]]
     }
 }

@@ -6,8 +6,15 @@ package my.tools
 class SourceCompare {
     /** list of sources to compare (each source a list of lines) */
     private final List<List<String>> sources = []
-    /** minimum block size to recognize as duplicate (default: 4) */
-    private int minimumBlockSize = 4
+    /** policies influencing comparison */
+    private final Map policies = [
+        // minimum block size to recognize as duplicate (default: 4)
+        minimumBlockSize:4,
+        // when true the comparison of two lines is independent of the letter case (default: false)
+        ignoreCase:false
+    ]
+    /** concrete "isEqual" compare function depending on policies */
+    private isEqual = { left, right -> this.isEqualExactMatch(left, right) }
 
     /**
      * Provide two sources to be compared.
@@ -23,13 +30,24 @@ class SourceCompare {
     }
 
     /**
-     * Change minimum block size.
+     * Change minimum block size policy.
      *
      * @param minimumBlockSize new size to recognize as duplicate.
      * @return builder itself to allow chaining of further operations.
      */
     SourceCompare setMinimumBlockSize(final int minimumBlockSize) {
-        this.minimumBlockSize = minimumBlockSize
+        this.policies.minimumBlockSize = minimumBlockSize
+        this
+    }
+
+    /**
+     * Change ignore case policy.
+     *
+     * @param enabled when true then ignore case is enabled
+     * @return builder itself to allow chaining of further operations.
+     */
+    SourceCompare setIgnoreCase(final boolean enabled) {
+        this.policies.ignoreCase = enabled
         this
     }
 
@@ -44,7 +62,7 @@ class SourceCompare {
         int identicalLines = 0
         while (leftPosition < this.sources[0].size() && rightPosition < this.sources[1].size()) {
             // lines are identical?
-            if (this.sources[0][leftPosition] != this.sources[1][rightPosition]) {
+            if (!this.isEqual(this.sources[0][leftPosition], this.sources[1][rightPosition])) {
                 break
             }
             // one identical line found
@@ -65,13 +83,17 @@ class SourceCompare {
     List compareSources() {
         def results = []
 
+        if (this.policies.ignoreCase) {
+            this.isEqual = { left, right -> this.isEqualIgnoreCase(left, right) }
+        }
+
         int leftPosition = 0
         while (leftPosition < this.sources[0].size()) {
             int offset = 0
             int rightPosition = 0
             while (rightPosition < this.sources[1].size()) {
                 int duplicateLines = this.countDuplicateLines(leftPosition, rightPosition)
-                if (duplicateLines >= this.minimumBlockSize) {
+                if (duplicateLines >= this.policies.minimumBlockSize) {
                     results.add([indices:[leftPosition, rightPosition], blockSize:duplicateLines])
                     rightPosition += duplicateLines
                     if (offset == 0) {
@@ -84,5 +106,27 @@ class SourceCompare {
             leftPosition += (offset > 0) ? offset: 1
         }
         results
+    }
+
+    /**
+     * Compare two string to be identical (exact match).
+     *
+     * @param left first string to compare with second one.
+     * @param right second string to compare with first one.
+     * @return true when both strings are identical.
+     */
+    private boolean isEqualExactMatch(final String left, final String right) {
+        left == right
+    }
+
+    /**
+     * Compare two string to be identical (ignoring letter case).
+     *
+     * @param left first string to compare with second one.
+     * @param right second string to compare with first one.
+     * @return true when both strings are identical.
+     */
+    private boolean isEqualIgnoreCase(final String left, final String right) {
+        left.equalsIgnoreCase(right)
     }
 }
