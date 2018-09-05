@@ -10,8 +10,9 @@ class SourceCompareTest {
     /** Testing of method {@link SourceCompare#countDuplicateLines(int, int)}. */
     @Test
     void testDuplicateLinesExactMatch() {
+        final List<String> SOURCE = '''green\nblue\nlight\ndark'''.split('\n')
         def sc = new SourceCompare()
-            .setSources('''green\nblue\nlight\ndark''', '''green\nblue\nlight\ndark''')
+            .setSources(SOURCE, SOURCE)
         assertThat(sc.countDuplicateLines(0, 0)).isEqualTo(4)
         assertThat(sc.countDuplicateLines(2, 2)).isEqualTo(2)
         assertThat(sc.countDuplicateLines(0, 2)).isEqualTo(0)

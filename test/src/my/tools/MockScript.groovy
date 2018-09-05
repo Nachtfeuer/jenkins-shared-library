@@ -105,6 +105,17 @@ class MockScript {
         }
     }
 
+    /** mock of the readFile DSL function. */
+    String readFile(final Map config) {
+        this.calls.add(['readFile', config])
+
+        if (this.provides) {
+            this.provides.pop()
+        } else {
+            null
+        }
+    }
+
     /**
     * @param title title of the HTML report.
     * @param path releative path where the HTML report is located.

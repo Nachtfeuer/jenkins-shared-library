@@ -27,13 +27,14 @@ class SourceCompare {
     /**
      * Provide two sources to be compared.
      *
-     * @param left first source to compare with second one.
-     * @param right second source to compare with first one.
+     * @param left first source to compare with second one (list of lines).
+     * @param right second source to compare with first one (list of lines).
      * @return builder itself to allow chaining of further operations.
      */
-    SourceCompare setSources(final String left, final String right) {
+    SourceCompare setSources(final List<String> left, final List<String> right) {
         this.sources.clear()
-        [left, right].each { this.sources.add(it.split('\n')) }
+        this.sources.add(left)
+        this.sources.add(right)
         this
     }
 
@@ -134,7 +135,7 @@ class SourceCompare {
             while (rightPosition < this.sources[1].size()) {
                 int duplicateLines = this.countDuplicateLines(leftPosition, rightPosition)
                 if (duplicateLines >= this.thePolicies.minimumBlockSize) {
-                    results.add([indices:[leftPosition, rightPosition], blockSize:duplicateLines])
+                    results.add([indices:[leftPosition, rightPosition].asImmutable(), blockSize:duplicateLines])
                     rightPosition += duplicateLines
                     if (offset == 0) {
                         offset += duplicateLines
@@ -145,7 +146,7 @@ class SourceCompare {
             }
             leftPosition += (offset > 0) ? offset: 1
         }
-        results
+        results.asImmutable()
     }
 
     /**
