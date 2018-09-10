@@ -38,6 +38,50 @@ class DuplicateCodeFinder extends Base {
     }
 
     /**
+     * Change minimum block size policy.
+     *
+     * @param minimumBlockSize new size to recognize as duplicate.
+     * @return builder itself to allow chaining of further operations.
+     */
+    DuplicateCodeFinder setMinimumBlockSize(final int minimumBlockSize) {
+        this.sourceCompare.minimumBlockSize = minimumBlockSize
+        this
+    }
+
+    /**
+     * Change ignore case policy.
+     *
+     * @param enabled when true then ignore case is enabled
+     * @return builder itself to allow chaining of further operations.
+     */
+    DuplicateCodeFinder setIgnoreCase(final boolean enabled) {
+        this.sourceCompare.ignoreCase = enabled
+        this
+    }
+
+    /**
+     * Change whitespaces policy.
+     *
+     * @param enabled when true then ignore whitespaces
+     * @return builder itself to allow chaining of further operations.
+     */
+    DuplicateCodeFinder setIgnoreWhitespaces(final boolean enabled) {
+        this.sourceCompare.ignoreWhitespaces = enabled
+        this
+    }
+
+    /**
+     * Change percentage similarity policy.
+     *
+     * @param percentage value (0 .. 100.0)
+     * @return builder itself to allow chaining of further operations.
+     */
+    DuplicateCodeFinder setPercentageSimilarity(final double percentage) {
+        this.sourceCompare.percentageSimilarity = percentage
+        this
+    }
+
+    /**
      * Checking for duplicate code.
      * @return true when no duplicate code has been found.
      */
@@ -52,11 +96,24 @@ class DuplicateCodeFinder extends Base {
             def source2 = it[1].collect { [key:it.key, value:it.value] } [0]
             if (source1.key <= source2.key) {
                 sourceCompare.setSources(source1.value, source2.value)
+                sourceCompare.filesIdentical = source1.key == source2.key
+
                 def results = sourceCompare.compareSources()
-                this.theReportData.add([
-                    sources:[pathAndFileName1:source1.key, pathAndFileName2:source2.key].asImmutable(),
-                    results:results
-                ])
+                // we only remember duplicates when there are at least 1:
+                if (results.size() > 0) {
+                    // special case: when comparing one file with itself and the only duplicte
+                    // is the whole file then we can ignore it:
+                    boolean ignore = results.size() == 1 \
+                        && source1.key == source2.key \
+                        && source1.value.size() == results[0].blockSize
+
+                    if (!ignore) {
+                        this.theReportData.add([
+                            sources:[pathAndFileName1:source1.key, pathAndFileName2:source2.key].asImmutable(),
+                            results:results
+                        ])
+                    }
+                }
             }
         }
         this.theReportData.isEmpty()

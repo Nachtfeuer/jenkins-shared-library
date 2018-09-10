@@ -23,6 +23,19 @@ class SourceCompare {
     ]
     /** concrete "isEqual" compare function depending on policies */
     private isEqual = { left, right -> this.isEqualExactMatch(left, right) }
+    /** Indicates whether (or not) the sources are from the same file (default: false) */
+    private boolean filesIdentical = false
+
+    /**
+     * Adjust the flag to indicate whether (or not) the sources are from the same file.
+     *
+     * @param filesIdentical when true the two sources are from the same file.
+     * @return builder itself to allow chaining of further operations.
+     */
+    SourceCompare setFilesIdentical(final boolean filesIdentical) {
+        this.filesIdentical = filesIdentical
+        this
+    }
 
     /**
      * Provide two sources to be compared.
@@ -130,23 +143,31 @@ class SourceCompare {
 
         int leftPosition = 0
         while (leftPosition < this.sources[0].size()) {
-            int offset = 0
             int rightPosition = 0
             while (rightPosition < this.sources[1].size()) {
                 int duplicateLines = this.countDuplicateLines(leftPosition, rightPosition)
-                if (duplicateLines >= this.thePolicies.minimumBlockSize) {
-                    results.add([indices:[leftPosition, rightPosition].asImmutable(), blockSize:duplicateLines])
+                def result = [indices:[leftPosition, rightPosition].asImmutable(), blockSize:duplicateLines]
+                if (duplicateLines >= this.thePolicies.minimumBlockSize && isNewDuplicate(results, result)) {
+                    results.add(result)
                     rightPosition += duplicateLines
-                    if (offset == 0) {
-                        offset += duplicateLines
-                    }
                 } else {
                     ++rightPosition
                 }
             }
-            leftPosition += (offset > 0) ? offset: 1
+            ++leftPosition
         }
         results.asImmutable()
+    }
+
+    /**
+     * @return true when it is really a new duplicate.
+     */
+    private static boolean isNewDuplicate(final List results, final Map result) {
+        !results.any {
+            def givenRange = it.indices[1] .. it.indices[1] + it.blockSize - 1
+            def newRange = result.indices[1] .. result.indices[1] + result.blockSize - 1
+            givenRange.intersect(newRange).size() > 0
+        }
     }
 
     /**

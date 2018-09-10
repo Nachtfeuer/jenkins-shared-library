@@ -44,7 +44,7 @@ class DuplicateCodeTest {
      * @return list of different test setups.
      */
     @SuppressWarnings('UnusedPrivateMethod')
-    private parametersForTestCompareSources() {
+    private List parametersForTestCompareSources() {
         [[
             sources:['green\nblue\nlight\ndark', 'light\ndark\ngreen\nblue'],
             minimumBlockSize:4,
@@ -78,6 +78,12 @@ class DuplicateCodeTest {
             percentageSimilarity:50.0,
             expectedResults:[
                 [indices:[0, 2], blockSize:2], [indices:[2, 0], blockSize:2]]
+        ], [
+            sources:['aa\naa\nbb\nbb\nAA\nAA', 'aa\naa\nbb\nbb\nAA\nAA'],
+            minimumBlockSize:2,
+            ignoreCase:true,
+            expectedResults:[
+                [indices:[0, 0], blockSize:6]]
         ]]
     }
 }
