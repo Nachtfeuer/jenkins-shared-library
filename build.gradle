@@ -95,6 +95,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'pl.pragmatists:JUnitParams:1.1.1'
     testCompile 'org.assertj:assertj-core:3.11.0'
+    testCompile 'org.yaml:snakeyaml:1.8'
 }
 
 jacocoTestCoverageVerification.dependsOn jacocoTestReport
