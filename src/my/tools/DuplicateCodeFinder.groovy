@@ -29,6 +29,7 @@ class DuplicateCodeFinder extends Base {
      * @return builder itself to allow chaining of further operations.
      */
     DuplicateCodeFinder setSourceFiles(final List<String> sources) {
+        this.theSources.clear()
         sources.each {
             final String CONTENT = this.script.readFile(file:it)
             final List<String> LINES = CONTENT.split('\n')

@@ -28,8 +28,9 @@ The next table should give a few simple examples on line comparisons:
 ## Usage
 
 ```groovy
-xdup.check(path:'src', extensions: ['.groovy'],
-           minimumBlockSize:6, ignoreCase:true, ignoreWhitespaces:true, percentageSimilarity:90)
+def listOfSource = xfind.files('.', '*.groovy')
+xdup(listOfSources, minimumBlockSize:6, ignoreCase:true,
+                    ignoreWhitespaces:true, percentageSimilarity:90)
 ```
 
 **Please note**: In a declarative pipeline you have to place it in a `script { ... }` block.

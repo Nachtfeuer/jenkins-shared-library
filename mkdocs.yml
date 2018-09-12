@@ -15,6 +15,6 @@ nav:
       - xgit.md
       - xpublish.md
       - xfind.md
-      - xdoc.md
+      - xdup.md
 
 theme: readthedocs
