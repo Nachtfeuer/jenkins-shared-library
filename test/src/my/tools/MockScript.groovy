@@ -121,8 +121,19 @@ class MockScript {
     * @param path releative path where the HTML report is located.
     * @param mainFile main HTML file (default: index.html)
     */
-    private void publishHtml(final String title, final String path, final String mainFile='index.html') {
+    void publishHtml(final String title, final String path, final String mainFile='index.html') {
         this.calls.add(['xpublish.html', title, path, mainFile])
+    }
+
+    /**
+    * Render a template as a final string.
+    *
+    * @param template the template to render.
+    * @param model is a map of data to be used in the template.
+    * @return rendered template is a normal string.
+    */
+    String xrender(final String template, final Map model) {
+        new Renderer(this).render(template, model)
     }
 }
 
