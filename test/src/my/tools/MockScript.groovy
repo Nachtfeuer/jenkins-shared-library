@@ -116,6 +116,11 @@ class MockScript {
         }
     }
 
+    /** mock of the writeFile DSL function */
+    void writeFile(final Map config) {
+        this.calls.add(['writeFile', config])
+    }
+
     /**
     * @param title title of the HTML report.
     * @param path releative path where the HTML report is located.

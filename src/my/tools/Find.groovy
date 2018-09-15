@@ -18,7 +18,7 @@ class Find extends Base {
      * @return list of found files
      */
     List<String> files(final String path, final String name) {
-        def result = this.script.sh(script:"find $path -type f -name \"$name\"", returnStdout:true)
+        def result = this.script.sh(script:"find $path -type f -name \"$name\"", returnStdout:true).trim()
         result.split('\n')
     }
 }

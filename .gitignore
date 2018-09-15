@@ -3,6 +3,7 @@
 build/
 bin/
 site/
+duplicates/
 
 .classpath
 .project
