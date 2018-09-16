@@ -14,7 +14,7 @@ sourceSets {
     main {
         groovy {
             srcDirs = ['src']
-            exclude 'my/dsl/**'
+            // exclude 'my/dsl/**'
         }
     }
 
@@ -55,13 +55,15 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.82
+                minimum = 0.83
             }
         }
     }
 }
 
 test {
+    failFast = true
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     testLogging {
         exceptionFormat = 'full'
     }

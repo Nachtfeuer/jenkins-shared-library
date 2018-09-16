@@ -9,7 +9,7 @@ class ShellExecutor {
      * @return map with two fields: exitCode (int) and lines (list of strings)
      */
     Map execute(final String command) {
-        def result = [exitCode: 0, lines:[]]
+        def result = [exitCode:0, lines:[]]
         def process = new ProcessBuilder(['bash', '-c', command])
             .redirectErrorStream(true)
             .start()
@@ -18,6 +18,6 @@ class ShellExecutor {
         process.inputStream.eachLine { result.lines.add(it) }
         process.waitFor()
         result.exitCode = process.exitValue()
-        return result
+        result
     }
 }
