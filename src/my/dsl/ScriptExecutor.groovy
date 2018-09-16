@@ -1,9 +1,10 @@
 package my.dsl
 
 import org.codehaus.groovy.control.CompilerConfiguration
-import groovy.lang.Binding
-import groovy.lang.GroovyShell
 
+/**
+ * Can execute a Groovy script with DSL.
+ */
 class ScriptExecutor {
     /** data model for binding */
     private final Map model = [:]
