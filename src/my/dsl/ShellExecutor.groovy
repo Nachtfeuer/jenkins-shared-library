@@ -11,7 +11,7 @@ class ShellExecutor {
     Map execute(final String command) {
         def result = [exitCode: 0, lines:[]]
         def process = new ProcessBuilder(['bash', '-c', command])
-            .redirectErrorStream(true) 
+            .redirectErrorStream(true)
             .start()
 
         process.outputStream.close()
