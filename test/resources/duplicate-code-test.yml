@@ -1,0 +1,49 @@
+parameters:
+  # two blocks with inverse order of occurence with the configured minimum block size of 4.
+  # no results expected since the maximum duplictates have a block size of 2.
+  - sources: ["green\nblue\nlight\ndark", "light\ndark\ngreen\nblue"]
+    minimumBlockSize: 4
+    expectedResults: []
+
+  # two blocks with inverse order of occurence with the configured minimum block size of 2.
+  # two result expect since each 2 line block appears twice.
+  - sources: ["green\nblue\nlight\ndark", "light\ndark\ngreen\nblue"]
+    minimumBlockSize: 2
+    expectedResults:
+      - {indices: [0, 2], blockSize: 2}
+      - {indices: [2, 0], blockSize: 2}
+
+  - sources: ["green\nblue\nlight\ndark", "light\ndark\ngreen\nblue\ngreen\nblue"]
+    minimumBlockSize: 2
+    expectedResults:
+      - {indices: [0, 2], blockSize: 2}
+      - {indices: [0, 4], blockSize: 2}
+      - {indices: [2, 0], blockSize: 2}
+
+  - sources: ["green\nblue\nlight\ndark", "Light\nDark\nGreen\nBlue"]
+    minimumBlockSize: 2
+    ignoreCase: true
+    expectedResults:
+      - {indices: [0, 2], blockSize: 2}
+      - {indices: [2, 0], blockSize: 2}
+
+  - sources: ["green\nblue\nlight\ndark", " Light \n  \t Dark \n   Green \t \n  Blue  "]
+    minimumBlockSize: 2
+    ignoreCase: true
+    ignoreWhitespaces: true
+    expectedResults:
+      - {indices: [0, 2], blockSize: 2}
+      - {indices: [2, 0], blockSize: 2}
+
+  - sources: ["gruen\nblau\nlicht\ndark\ndunkel", "light\ndark\ngreen\nblue"]
+    minimumBlockSize: 2
+    percentageSimilarity: 50.0
+    expectedResults:
+      - {indices: [0, 2], blockSize: 2}
+      - {indices: [2, 0], blockSize: 2}
+
+  - sources: ["aa\naa\nbb\nbb\nAA\nAA", "aa\naa\nbb\nbb\nAA\nAA"]
+    minimumBlockSize: 2
+    ignoreCase: true
+    expectedResults:
+      - {indices: [0, 0], blockSize: 6}
