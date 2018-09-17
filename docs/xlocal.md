@@ -57,6 +57,32 @@ It works really good. Even the `my.dsl.*` code can be easily unittested.
 At the end you just need one *all in one* jar being executable to
 pass a script file as parameter which works similar to the example above.
 
+## Using the fat jar as tool
+
+```bash
+$ java -jar build/libs/jenkins-shared-pipeline-all-1.0.jar --help
+usage: java -jar jenkins-shared-pipeline.jar [options]
+Options:
+ -h,--help            Print this help text and exit.
+ -s,--script <file>   Groovy script file
+```
+
+If you put the code passed to the `ScriptExecutor` in last example into a file
+you can do following
+
+```bash
+$ java -jar build/libs/jenkins-shared-pipeline-all-1.0.jar --script /tmp/xdup.groovy
+```
+
+## Supported DSL commands
+
+It will constantly be extended but for now
+
+| Commands:                         |
+| ----- | -- | --------- | -------- |
+| echo  | sh | writeFile | readFile |
+
+
 ## Is vars dead code?
 
 At least I have not found a way (yet) how to use it without Jenkins.

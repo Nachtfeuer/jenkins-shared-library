@@ -34,8 +34,8 @@ class JenkinsTest {
         def jenkins = [:] as Jenkins
         jenkins.writeFile(file:'test_write.txt', text:'test write')
         assertThat(new File('test_write.txt').text).isEqualTo('test write')
-        new File('test_read.txt').delete()
-        assertThat(new File('test_read.txt').exists()).isEqualTo(false)
+        new File('test_write.txt').delete()
+        assertThat(new File('test_write.txt').exists()).isEqualTo(false)
     }
 
     /** Testing of {@link Jenkins#readFile(final Map)}. */
