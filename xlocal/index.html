@@ -156,7 +156,7 @@
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#simple-scenario">Simple scenario</a></li>
 <li><a href="#using-the-fat-jar-as-tool">Using the fat jar as tool</a></li>
-<li><a href="#supported-dsl-commands">Supported DSL commands</a></li>
+<li><a href="#supported-dsl-functions">Supported DSL functions</a></li>
 <li><a href="#is-vars-dead-code">Is vars dead code?</a></li>
 </ul>
 </li>
@@ -221,8 +221,9 @@ you can do following</p>
 <pre><code class="bash">$ java -jar build/libs/jenkins-shared-pipeline-all-1.0.jar --script /tmp/xdup.groovy
 </code></pre>
 
-<h2 id="supported-dsl-commands">Supported DSL commands</h2>
-<p>It will constantly be extended but for now</p>
+<h2 id="supported-dsl-functions">Supported DSL functions</h2>
+<p>It will constantly be extended but for now
+following DSL functions are implemented:</p>
 <table>
 <thead>
 <tr>
@@ -238,6 +239,12 @@ you can do following</p>
 <td>sh</td>
 <td>writeFile</td>
 <td>readFile</td>
+</tr>
+<tr>
+<td>withEnv</td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
