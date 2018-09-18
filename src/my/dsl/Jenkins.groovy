@@ -7,6 +7,18 @@ package my.dsl
 abstract class Jenkins extends Script {
     /** newline constant */
     private final static String NEWLINE = '\n'
+    /** environment variables */
+    private final Map theEnv = [:]
+
+    /**
+     * Provide current environment variables (read only).
+     *
+     * @return Provide current environment block
+     * @note In opposite to Jenkins it is (here) not allowed to modify; please use <b>withEnv</b>.
+     */
+    Map getEnv() {
+        this.theEnv.asImmutable()
+    }
 
     /**
      * Print a message to the stdout.
@@ -29,13 +41,37 @@ abstract class Jenkins extends Script {
      */
     def sh(final Map config) {
         if (config.returnStdout ?: false) {
-            def result = new ShellExecutor().execute(config.script)
+            def result = new ShellExecutor().updateEnv(this.theEnv).execute(config.script)
             result.lines.join(NEWLINE)
         } else {
-            def result = new ShellExecutor().execute(config.script)
+            def result = new ShellExecutor().updateEnv(this.theEnv).execute(config.script)
             println(result.lines.join(NEWLINE))
             null
         }
+    }
+
+    /**
+     * Define a scope (block) where the defined environment variables are available.
+     *
+     * @param envStrList list of strings in the form 'a=b'.
+     * @param body (closure) block capability.
+     * @return whatever the (closure) block does provide.
+     */
+    def withEnv(final List<String> envStrList, final Closure body) {
+        // backup old environment variables
+        def backupEnv = [:]
+        backupEnv.putAll(this.theEnv)
+        // adjust environment variables (overwrite and/or add)
+        for (entry in envStrList) {
+            def tokens = entry.tokenize('=')*.trim()
+            this.theEnv.put(tokens[0], tokens[1])
+        }
+        // execute the (closure) block
+        def result = body()
+        // restore old environment variables
+        this.theEnv.clear()
+        this.theEnv.putAll(backupEnv)
+        result
     }
 
     /**

@@ -74,13 +74,15 @@ you can do following
 $ java -jar build/libs/jenkins-shared-pipeline-all-1.0.jar --script /tmp/xdup.groovy
 ```
 
-## Supported DSL commands
+## Supported DSL functions
 
 It will constantly be extended but for now
+following DSL functions are implemented:
 
-| Commands:                         |
-| ----- | -- | --------- | -------- |
-| echo  | sh | writeFile | readFile |
+| Commands:                           |
+| ------- | -- | --------- | -------- |
+| echo    | sh | writeFile | readFile |
+| withEnv |    |           |          |
 
 
 ## Is vars dead code?

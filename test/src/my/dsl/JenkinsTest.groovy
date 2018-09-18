@@ -28,6 +28,15 @@ class JenkinsTest {
         assertThat(output).isEqualTo('hello\n')
     }
 
+    /** Testing of {@link Jenkins#sh(final Map)}. */
+    @Test
+    void testShWithEnv() {
+        def jenkins = [:] as Jenkins
+        jenkins.withEnv(['MESSAGE=hello']) {
+            assertThat(jenkins.sh(script:'echo \$MESSAGE', returnStdout:true)).isEqualTo('hello')
+        }
+    }
+
     /** Testing of {@link Jenkins#writeFile(final Map)}. */
     @Test
     void testWriteFile() {
@@ -46,5 +55,26 @@ class JenkinsTest {
         assertThat(jenkins.readFile(file:'test_read.txt')).isEqualTo('test read')
         new File('test_read.txt').delete()
         assertThat(new File('test_read.txt').exists()).isEqualTo(false)
+    }
+
+    /**
+     * Testing <b>withEnv</b> DSL behaving correctly.
+     */
+    @Test
+    void testWithEnd() {
+        def jenkins = [:] as Jenkins
+        assertThat(jenkins.env).doesNotContainKey('DEMO0')
+        jenkins.withEnv(['DEMO0=main']) {
+            assertThat(jenkins.env).containsEntry('DEMO0', 'main')
+            assertThat(jenkins.env).doesNotContainKey('DEMO1')
+            assertThat(jenkins.env).doesNotContainKey('DEMO2')
+            jenkins.withEnv(['DEMO1= hello ', 'DEMO2= world ']) {
+                assertThat(jenkins.env).containsEntry('DEMO1', 'hello')
+                assertThat(jenkins.env).containsEntry('DEMO2', 'world')
+            }
+            assertThat(jenkins.env).containsEntry('DEMO0', 'main')
+            assertThat(jenkins.env).doesNotContainKey('DEMO1')
+            assertThat(jenkins.env).doesNotContainKey('DEMO2')
+        }
     }
 }
