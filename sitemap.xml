@@ -2,47 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/</loc>
-     <lastmod>2018-08-29</lastmod>
+     <lastmod>2018-09-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/documentation/</loc>
-     <lastmod>2018-08-29</lastmod>
+     <lastmod>2018-09-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/gradle/</loc>
-     <lastmod>2018-08-29</lastmod>
+     <lastmod>2018-09-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/virtualenv/</loc>
-     <lastmod>2018-08-29</lastmod>
+     <lastmod>2018-09-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/xgradle/</loc>
-     <lastmod>2018-08-29</lastmod>
+     <lastmod>2018-09-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/jobdslcode/</loc>
-     <lastmod>2018-08-29</lastmod>
+     <lastmod>2018-09-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/xgit/</loc>
-     <lastmod>2018-08-29</lastmod>
+     <lastmod>2018-09-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/xpublish/</loc>
-     <lastmod>2018-08-29</lastmod>
+     <lastmod>2018-09-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://nachtfeuer.github.io/jenkins-shared-library/xfind/</loc>
-     <lastmod>2018-08-29</lastmod>
+     <lastmod>2018-09-18</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://nachtfeuer.github.io/jenkins-shared-library/xdup/</loc>
+     <lastmod>2018-09-18</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://nachtfeuer.github.io/jenkins-shared-library/xlocal/</loc>
+     <lastmod>2018-09-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
