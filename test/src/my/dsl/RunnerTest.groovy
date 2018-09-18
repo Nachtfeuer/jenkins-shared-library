@@ -24,4 +24,17 @@ class RunnerTest {
         assertThat(new File(FILENAME).exists()).isEqualTo(false)
         assertThat(output).isEqualTo('hello\n')
     }
+
+    /**
+     * Testing help mechanism.
+     */
+    @Test
+    void testHelpParameter() {
+        def output = new Capture().stdout {
+            def arguments = new String[1]
+            arguments[0] = '--help'
+            Runner.main(arguments)
+        }
+        assertThat(output).contains('usage:')
+    }
 }
