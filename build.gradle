@@ -14,7 +14,7 @@ sourceSets {
     main {
         groovy {
             srcDirs = ['src']
-            exclude 'my/dsl/**'
+            // exclude 'my/dsl/**'
         }
     }
 
@@ -55,13 +55,15 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.82
+                minimum = 0.83
             }
         }
     }
 }
 
 test {
+    failFast = true
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     testLogging {
         exceptionFormat = 'full'
     }
@@ -79,8 +81,21 @@ repositories {
     mavenCentral()
 }
 
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'jenkins-shared-library as jar',  
+                   'Implementation-Version': version,
+                   'Main-Class': 'my.dsl.Runner'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.15'
+    compile 'commons-cli:commons-cli:1.4'
+
     testCompile 'junit:junit:4.12'
     testCompile 'pl.pragmatists:JUnitParams:1.1.1'
     testCompile 'org.assertj:assertj-core:3.11.0'
@@ -89,7 +104,7 @@ dependencies {
 
 jacocoTestCoverageVerification.dependsOn jacocoTestReport
 check.dependsOn jacocoTestCoverageVerification
-check.finalizedBy 'pitest'
+check.finalizedBy 'pitest', 'fatJar'
 
 
 defaultTasks 'check'

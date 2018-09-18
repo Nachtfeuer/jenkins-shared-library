@@ -16,5 +16,6 @@ nav:
       - xpublish.md
       - xfind.md
       - xdup.md
+      - xlocal.md
 
 theme: readthedocs
