@@ -77,4 +77,19 @@ class JenkinsTest {
             assertThat(jenkins.env).doesNotContainKey('DEMO2')
         }
     }
+
+    /**
+     * Testing <b>stage</b> DSL behaving correctly.
+     */
+    @Test
+    void testStage() {
+        def jenkins = [:] as Jenkins
+        def output = new Capture().stdout {
+            jenkins.stage('Demo') {
+                jenkins.echo('hello')
+            }
+        }
+
+        assertThat(output).isEqualTo('stage(Demo) {\nhello\n}\n')
+    }
 }

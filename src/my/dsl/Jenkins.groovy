@@ -93,4 +93,18 @@ abstract class Jenkins extends Script {
     String readFile(final Map config) {
         new File(config.file).text
     }
+
+    /**
+     * Run pipeline code in a named stage block.
+     *
+     * @param title title of the stage
+     * @param body (closure) block capability.
+     * @return whatever the (closure) block does provide.
+     */
+    def stage(final String title, final Closure body) {
+        println("stage(${title}) {")
+        def result = body()
+        println('}')
+        result
+    }
 }
