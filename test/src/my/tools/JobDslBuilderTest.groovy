@@ -12,6 +12,12 @@ class JobDslBuilderTest {
      */
     @Test
     void testMultiBranchPipeline() {
+        def libraries = [
+            [name:'test1', url:'https://localhost/lib1.git', credentialsId:'cred1', defaultVersion:'1.0'],
+            [name:'test2', url:'https://localhost/lib2.git', credentialsId:'cred2', defaultVersion:'2.0'],
+            [name:'test3', url:'https://localhost/lib3.git']
+        ]
+
         def dslCode = new JobDslBuilder()
             .setType(JobDslType.MULTIBRANCH_PIPELINE)
             .setName('demo')
@@ -19,6 +25,7 @@ class JobDslBuilderTest {
             .setSource('https://github.com/Nachtfeuer/jenkins-shared-library.git')
             .setCredentialsId('GIT_CREDENTIALS_ID')
             .setScriptPath('Jenkinsfile')
+            .setLibraries(libraries)
             .build()
 
         assertThat(dslCode).contains("multibranchPipelineJob('demo')")
@@ -26,6 +33,15 @@ class JobDslBuilderTest {
         assertThat(dslCode).contains("credentialsId('GIT_CREDENTIALS_ID')")
         assertThat(dslCode).contains("remote('https://github.com/Nachtfeuer/jenkins-shared-library.git')")
         assertThat(dslCode).contains("scriptPath('Jenkinsfile')")
+        assertThat(dslCode).contains(
+            "libraryConfiguration { name('test1'); defaultVersion('1.0'); " +
+            "retriever { modernSCM { scm { git { id('cred1'); remote('https://localhost/lib1.git') } } } } }")
+        assertThat(dslCode).contains(
+            "libraryConfiguration { name('test2'); defaultVersion('2.0'); " +
+            "retriever { modernSCM { scm { git { id('cred2'); remote('https://localhost/lib2.git') } } } } }")
+        assertThat(dslCode).contains(
+            "libraryConfiguration { name('test3'); defaultVersion('master'); " +
+            "retriever { modernSCM { scm { git { id(''); remote('https://localhost/lib3.git') } } } } }")
     }
 
     /**

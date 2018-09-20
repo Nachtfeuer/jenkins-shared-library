@@ -27,6 +27,7 @@ class JobDslConverter extends Base {
                     case 'source'        : builder.source = value; break
                     case 'script'        : builder.scriptPath = value; break
                     case 'credentialsId' : builder.credentialsId = value; break
+                    case 'libraries'     : builder.libraries = value; break
                 }
         }
         builder.build()

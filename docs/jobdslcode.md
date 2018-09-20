@@ -23,6 +23,17 @@ job definition for creating a new job is following:
 | credentialsId | Id of credentials | *optional*; Jenkins credentials store for SSH credentials    |
 | script        | Jenkinsfile path  | path and filename of Jenkinsfile (default: Jenkinsfile)      |
 | history       | number of builds  | *pipeline only*; how many old builds to keep (default: 30)   |
+| libraries     | list of libraries | defines shared libraries for multibranch jobs                |
+
+A library entry is again a map:
+
+| field          | meaning             | comment                                         |
+|--------------- | ------------------- | ----------------------------------------------- |
+| name           | name of the library | The name to specify with @Library               |
+| defaultVersion | branch or tag       | if not specified: master                        |
+| credentialsId  | id for access       | refers to Jenkins credential store; optional    |
+| url            | git url             | url of source code repository (https, ssh, ...) |
+
 
 
 ## Example with JSON
@@ -43,6 +54,10 @@ pipeline {
                         description:'a Jenkins shared library',
                         source:'https://github.com/Nachtfeuer/jenkins-shared-library.git',
                         script:'Jenkinsfile',
+                        libraries: [[
+                            name:'jenkins-shared-library',
+                            url:'https://github.com/Nachtfeuer/jenkins-shared-library.git'
+                        ]]
                     ]))
                     writeJSON(file:'demo.json', json:DATA)
                 }
@@ -52,7 +67,7 @@ pipeline {
         stage('Job DSL') {
             steps {
                 script {
-                    jobDsl(scriptText:jobDslCode.fromJson('demo.json))
+                    jobDsl(scriptText:jobDslCode.fromJson('demo.json'))
                 }
             }
         }
@@ -77,6 +92,10 @@ pipeline {
                         description:'a Jenkins shared library',
                         source:'https://github.com/Nachtfeuer/jenkins-shared-library.git',
                         script:'Jenkinsfile',
+                        libraries: [[
+                            name:'jenkins-shared-library',
+                            url:'https://github.com/Nachtfeuer/jenkins-shared-library.git'
+                        ]]
                     ]
                     writeYaml(file:'demo.yaml', data:DATA)
                 }
