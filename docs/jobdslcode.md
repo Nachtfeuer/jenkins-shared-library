@@ -67,7 +67,7 @@ pipeline {
         stage('Job DSL') {
             steps {
                 script {
-                    jobDsl(scriptText:jobDslCode.fromJson('demo.json))
+                    jobDsl(scriptText:jobDslCode.fromJson('demo.json'))
                 }
             }
         }
