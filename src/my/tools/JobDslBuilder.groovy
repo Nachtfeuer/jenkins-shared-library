@@ -22,6 +22,8 @@ final class JobDslBuilder {
     private String theScriptPath
     /** final number of builds to keep in history list */
     private Integer theHistory = 30
+    /** list of shared libraries (for multibranch only) */
+    private List theLibraries = []
 
     /**
      * Changing the job type.
@@ -101,6 +103,20 @@ final class JobDslBuilder {
     }
 
     /**
+     * Specify shared libraries to be used for all branch jobs.
+     *
+     * @param list of libraries (name, url, defaultVersion and credentialsId)
+     * @return builder itself for further operations
+     */
+    JobDslBuilder setLibraries(final List<Map<String, String>> libraries) {
+        if (libraries.every {
+                it.every { it.key in ['name', 'url', 'defaultVersion', 'credentialsId'] } }) {
+            this.theLibraries = libraries
+        }
+        this
+    }
+
+    /**
      * Create Job DSL code depending on type.
      * @return Job DSL code
      */
@@ -116,6 +132,21 @@ final class JobDslBuilder {
      * @return Job DSL code
      */
     private String buildMultiBranchPipeline() {
+        def libraries = ''
+        if (this.theLibraries.size() > 0) {
+            libraries = 'folderLibraries { libraries { '
+            for (library in this.theLibraries) {
+                libraries += 'libraryConfiguration { '
+                libraries += "name('${library.name}'); "
+                libraries += "defaultVersion('${library.defaultVersion ?: 'master'}'); "
+                libraries += 'retriever { modernSCM { scm { git { '
+                libraries += "id('${library.credentialsId ?: ''}'); "
+                libraries += "remote('${library.url}') "
+                libraries += '} } } } }; '
+            }
+            libraries += '} }'
+        }
+
         """
         multibranchPipelineJob('${this.theName}') {
             description('${this.theDescription}')
@@ -125,6 +156,9 @@ final class JobDslBuilder {
             } }
             factory { workflowBranchProjectFactory { scriptPath('${this.theScriptPath}') } }
             orphanedItemStrategy { discardOldItems { numToKeep(0) }}
+            properties {
+                ${libraries}
+            }
         }
         """
     }
