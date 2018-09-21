@@ -82,7 +82,7 @@ following DSL functions are implemented:
 | Commands:                              |
 | ------- | ----- | --------- | -------- |
 | echo    | sh    | writeFile | readFile |
-| withEnv | stage | xparser   |          |
+| withEnv | stage | xparser   | xfind    |
 
 
 ## Is vars dead code?

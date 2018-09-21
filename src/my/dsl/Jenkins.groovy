@@ -1,6 +1,7 @@
 package my.dsl
 
 import my.tools.Parser
+import my.tools.Find
 
 /**
  * DSL Implementation for local use.
@@ -111,12 +112,22 @@ abstract class Jenkins extends Script {
     }
 
     /**
-     * Providing xparser object
+     * Providing xparser object.
      *
-     * @return xparser object providing functions like xml.
+     * @return xparser object providing functions like <b>xml</b>.
      */
     Map getXparser() {
         def parseXml = { final String text -> new Parser().parseXml(text) }
         [xml:parseXml]
+    }
+
+    /**
+     * Providing xfind object.
+     *
+     * @return xfind object providing functions like <b>files</b>.
+     */
+    Map getXfind() {
+        def findFiles = { final String path, final String name -> new Find(this).files(path, name) }
+        [files:findFiles]
     }
 }

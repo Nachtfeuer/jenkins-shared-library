@@ -93,6 +93,7 @@ class JenkinsTest {
         assertThat(output).isEqualTo('stage(Demo) {\nhello\n}\n')
     }
 
+    /** Testing xparser.xml DSL */
     @Test
     void testParseXml() {
         def jenkins = [:] as Jenkins
@@ -100,5 +101,15 @@ class JenkinsTest {
         def text = new File(pomFile).text
         assertThat(jenkins.xparser.xml(text)).isEqualTo(
             [modelVersion:'4.0.0', groupId:'my-group-id', artifactId:'my-artifact-id', version:'1.0'])
+    }
+
+    /** Testing xfind.files DSL */
+    @Test
+    void testFindFiles() {
+        def jenkins = [:] as Jenkins
+        def path = System.getProperty('user.dir') + '/test/resources'
+        def result = jenkins.xfind.files(path, '*.xml')
+        assertThat(result.size()).isEqualTo(1)
+        assertThat(result[0]).contains('pom.default.xml')
     }
 }
