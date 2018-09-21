@@ -92,4 +92,13 @@ class JenkinsTest {
 
         assertThat(output).isEqualTo('stage(Demo) {\nhello\n}\n')
     }
+
+    @Test
+    void testParseXml() {
+        def jenkins = [:] as Jenkins
+        def pomFile = System.getProperty('user.dir') + '/test/resources/pom.default.xml'
+        def text = new File(pomFile).text
+        assertThat(jenkins.xparser.xml(text)).isEqualTo(
+            [modelVersion:'4.0.0', groupId:'my-group-id', artifactId:'my-artifact-id', version:'1.0'])
+    }
 }

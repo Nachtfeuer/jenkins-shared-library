@@ -1,5 +1,7 @@
 package my.dsl
 
+import my.tools.Parser
+
 /**
  * DSL Implementation for local use.
  */
@@ -106,5 +108,15 @@ abstract class Jenkins extends Script {
         def result = body()
         println('}')
         result
+    }
+
+    /**
+     * Providing xparser object
+     *
+     * @return xparser object providing functions like xml.
+     */
+    Map getXparser() {
+        def parseXml = { final String text -> new Parser().parseXml(text) }
+        [xml:parseXml]
     }
 }

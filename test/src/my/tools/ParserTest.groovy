@@ -15,7 +15,7 @@ class ParserTest {
         text = '<project><version>1.0</version></project>'
         assertThat(new Parser().parseXml(text)).isEqualTo([version:'1.0'])
 
-        def pomFile  = System.getProperty('user.dir') + '/test/resources/pom.default.xml'
+        def pomFile = System.getProperty('user.dir') + '/test/resources/pom.default.xml'
         text = new File(pomFile).text
         assertThat(new Parser().parseXml(text)).isEqualTo(
             [modelVersion:'4.0.0', groupId:'my-group-id', artifactId:'my-artifact-id', version:'1.0'])

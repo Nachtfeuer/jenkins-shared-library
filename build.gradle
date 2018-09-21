@@ -16,7 +16,6 @@ sourceSets {
     main {
         groovy {
             srcDirs = ['src']
-            // exclude 'my/dsl/**'
         }
     }
 
