@@ -12,6 +12,8 @@ class Git extends Base {
     public final static String AUTHOR_NAME_CMD = 'git show -s --format="%an"'
     /** git author mail of last commit */
     public final static String AUTHOR_MAIL_CMD = 'git show -s --format="%ae"'
+    /** git get last tag */
+    public final static String LAST_TAG_CMD = 'git describe --tags --abbrev=1'
 
     /**
      * Initializing with Jenkinsfile script instance only.
@@ -50,5 +52,13 @@ class Git extends Base {
      */
     String getAuthorMail() {
         this.script.sh(script:AUTHOR_MAIL_CMD, returnStdout:true)
+    }
+
+    /**
+     * Get last tag (if available).
+     * @return last tag otherwise an empty string.
+     */
+    String getLastTag() {
+        this.script.sh(script:LAST_TAG_CMD, returnStdout:true)
     }
 }

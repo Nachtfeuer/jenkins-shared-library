@@ -51,4 +51,15 @@ class GitTest {
         def git = new Git(script)
         assertThat(git.authorMail).isEqualTo('thomas.lehmann.private@gmail.com')
     }
+
+    /**
+     * Testing of method {@link Git#getLastTag()}.
+     */
+    @Test
+    void testGitLastTag() {
+        def script = new MockScript()
+        script.provide('v0.1')
+        def git = new Git(script)
+        assertThat(git.lastTag).isEqualTo('v0.1')
+    }
 }

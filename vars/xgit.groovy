@@ -31,3 +31,11 @@ String getAuthorName() {
 String getAuthorMail() {
     new Git(this).authorMail
 }
+
+/**
+ * Get last tag.
+ * @return last tag.
+ */
+String getLastTag() {
+    new Git(this).lastTag
+}
