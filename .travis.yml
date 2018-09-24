@@ -6,6 +6,7 @@ env:
 
 jdk:
   - oraclejdk8
+  - oraclejdk9
 
 script: ./gradlew -i -Pgroovy_version=${GROOVY_VERSION}
 
