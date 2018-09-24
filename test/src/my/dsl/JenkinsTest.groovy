@@ -142,4 +142,15 @@ class JenkinsTest {
         def jenkins = [:] as Jenkins
         assertThat(jenkins.xgradle).isInstanceOf(Gradle)
     }
+
+    /** Testing xrender DSL */
+    @Test
+    void testRender() {
+        def jenkins = [:] as Jenkins
+        def model = [values:[2, 4, 6, 8, 10]]
+        assertThat(jenkins.xrender('model.values.each{ v(it) }', model)).isEqualTo(
+             '<v>2</v><v>4</v><v>6</v><v>8</v><v>10</v>')
+        assertThat(jenkins.xrender('model.values.each{ yieldUnescaped("$it ") }', model)).isEqualTo(
+             '2 4 6 8 10 ')
+    }
 }

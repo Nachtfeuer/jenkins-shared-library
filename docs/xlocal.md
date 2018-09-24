@@ -83,7 +83,7 @@ following DSL functions are implemented:
 | -------- | ----- | --------- | -------- |
 | echo     | sh    | writeFile | readFile |
 | withEnv  | stage | xparser   | xfind    |
-| xpublish | xgit  | xgradle   |          |
+| xpublish | xgit  | xgradle   | xrender  |
 
 **Please note**: The DSL **xpublish** does not do anything locally.
 

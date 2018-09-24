@@ -4,6 +4,7 @@ import my.tools.Parser
 import my.tools.Find
 import my.tools.Git
 import my.tools.Gradle
+import my.tools.Renderer
 
 /**
  * DSL Implementation for local use.
@@ -159,5 +160,16 @@ abstract class Jenkins extends Script {
      */
     def getXgradle() {
         new Gradle(this)
+    }
+
+    /**
+    * Render a template as a final string.
+    *
+    * @param template the template to render.
+    * @param model is a map of data to be used in the template.
+    * @return rendered template is a normal string.
+    */
+    String xrender(final String template, final Map model) {
+        new Renderer(this).render(template, model)
     }
 }
