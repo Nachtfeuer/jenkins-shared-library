@@ -1,9 +1,13 @@
 language: groovy
 
+env:
+ - GROOVY_VERSION=2.4.15
+ - GROOVY_VERSION=2.5.2
+
 jdk:
   - oraclejdk8
 
-script: ./gradlew -i
+script: ./gradlew -i -Pgroovy_version=${GROOVY_VERSION}
 
 after_success:
   - ./gradlew coveralls
