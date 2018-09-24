@@ -2,6 +2,7 @@ package my.dsl
 
 import my.tools.Parser
 import my.tools.Find
+import my.tools.Git
 
 /**
  * DSL Implementation for local use.
@@ -139,5 +140,14 @@ abstract class Jenkins extends Script {
     Map getXpublish() {
         def publishHtml = { final String title, final String path, final String mainFile='index.html' -> }
         [html:publishHtml]
+    }
+
+    /**
+     * Providing xgit object.
+     *
+     * @return xgit object
+     */
+    def getXgit() {
+        new Git(this)
     }
 }

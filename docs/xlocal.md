@@ -83,9 +83,9 @@ following DSL functions are implemented:
 | -------- | ----- | --------- | -------- |
 | echo     | sh    | writeFile | readFile |
 | withEnv  | stage | xparser   | xfind    |
-| xpublish |       |           |          |
+| xpublish | xgit  |           |          |
 
-**Please note**: DSL like **xpublish** does not do anything locally.
+**Please note**: The DSL **xpublish** does not do anything locally.
 
 
 ## Is vars dead code?

@@ -3,6 +3,8 @@ package my.dsl
 import static org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
+import my.tools.Git
+
 /**
  * Testing of class {@link Jenkins}.
  */
@@ -121,5 +123,15 @@ class JenkinsTest {
         // just to verify the calls (no real publishing when running locally)
         jenkins.xpublish.html('HTML Code Coverage', 'build/reports/coverage')
         jenkins.xpublish.html('HTML Code Coverage', 'build/reports/coverage', 'index.html')
+    }
+
+    /** Testing xgit DSL */
+    @Test
+    void testGit() {
+        def jenkins = [:] as Jenkins
+        assertThat(jenkins.xgit).isInstanceOf(Git)
+        assertThat(jenkins.xgit.url).isEqualTo('https://github.com/Nachtfeuer/jenkins-shared-library.git')
+        assertThat(jenkins.xgit.authorName).isEqualTo('Thomas Lehmann')
+        assertThat(jenkins.xgit.authorMail).isEqualTo('thomas.lehmann.private@gmail.com')
     }
 }
