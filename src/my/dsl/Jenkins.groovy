@@ -3,6 +3,7 @@ package my.dsl
 import my.tools.Parser
 import my.tools.Find
 import my.tools.Git
+import my.tools.Gradle
 
 /**
  * DSL Implementation for local use.
@@ -149,5 +150,14 @@ abstract class Jenkins extends Script {
      */
     def getXgit() {
         new Git(this)
+    }
+
+    /**
+     * Providing xgradle object.
+     *
+     * @return xgradle object
+     */
+    def getXgradle() {
+        new Gradle(this)
     }
 }

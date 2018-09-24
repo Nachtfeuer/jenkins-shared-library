@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 import my.tools.Git
+import my.tools.Gradle
 
 /**
  * Testing of class {@link Jenkins}.
@@ -133,5 +134,12 @@ class JenkinsTest {
         assertThat(jenkins.xgit.url).isEqualTo('https://github.com/Nachtfeuer/jenkins-shared-library.git')
         assertThat(jenkins.xgit.authorName).isEqualTo('Thomas Lehmann')
         assertThat(jenkins.xgit.authorMail).isEqualTo('thomas.lehmann.private@gmail.com')
+    }
+
+    /** Testing xgradle DSL */
+    @Test
+    void testGradle() {
+        def jenkins = [:] as Jenkins
+        assertThat(jenkins.xgradle).isInstanceOf(Gradle)
     }
 }
