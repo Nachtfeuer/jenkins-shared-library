@@ -79,10 +79,13 @@ $ java -jar build/libs/jenkins-shared-pipeline-all-1.0.jar --script /tmp/xdup.gr
 It will constantly be extended but for now
 following DSL functions are implemented:
 
-| Commands:                              |
-| ------- | ----- | --------- | -------- |
-| echo    | sh    | writeFile | readFile |
-| withEnv | stage | xparser   | xfind    |
+| Commands:                               |
+| -------- | ----- | --------- | -------- |
+| echo     | sh    | writeFile | readFile |
+| withEnv  | stage | xparser   | xfind    |
+| xpublish |       |           |          |
+
+**Please note**: DSL like **xpublish** does not do anything locally.
 
 
 ## Is vars dead code?

@@ -130,4 +130,14 @@ abstract class Jenkins extends Script {
         def findFiles = { final String path, final String name -> new Find(this).files(path, name) }
         [files:findFiles]
     }
+
+    /**
+     * Providing xpublish object. Does not publish because it's running locally.
+     *
+     * @return xpublish object
+     */
+    Map getXpublish() {
+        def publishHtml = { final String title, final String path, final String mainFile='index.html' -> }
+        [html:publishHtml]
+    }
 }

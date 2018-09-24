@@ -112,4 +112,14 @@ class JenkinsTest {
         assertThat(result.size()).isEqualTo(1)
         assertThat(result[0]).contains('pom.default.xml')
     }
+
+    /** Testing xpublish.html DSL */
+    @Test
+    void testPublishHtml() {
+        def jenkins = [:] as Jenkins
+        assertThat(jenkins.xpublish).isInstanceOf(Map)
+        // just to verify the calls (no real publishing when running locally)
+        jenkins.xpublish.html('HTML Code Coverage', 'build/reports/coverage')
+        jenkins.xpublish.html('HTML Code Coverage', 'build/reports/coverage', 'index.html')
+    }
 }
