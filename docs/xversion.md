@@ -15,14 +15,28 @@ def version = xversion.define(major:1, minor:0, patch:0)
 println(version) // prints [major:1, minor:0, patch:0]
 ```
 
+or
+
+```groovy
+def version = xversion.define()
+println(version) // prints [major:1, minor:0]
+```
+
 ### Defining the incrementor
 
 The incrementor - as the name says - increments a version part.
 
 ```groovy
-def version = xversion.increment(major:version)
+def version = xversion.define(major:1, minor:0, patch:0)
+version = xversion.increment(major:version)
 println(version) // prints [major:2, minor:0, patch:0]
-def version = xversion.increment(minor:version)
+```
+
+or
+
+```groovy
+def version = xversion.define(major:2, minor:0, patch:0)
+version = xversion.increment(minor:version)
 println(version) // prints [major:2, minor:1, patch:0]
 ```
 

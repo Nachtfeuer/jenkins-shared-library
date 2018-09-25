@@ -25,10 +25,33 @@ class Version extends Base {
             if (config.every { Version.isValidKey(it.key) && Version.isValidValue(it.value) }) {
                 version = config
             } else {
-                version = null
+                version = [:]
             }
         }
         version
+    }
+
+    /**
+     * Increment a version part.
+     *
+     * @param config contain the version part as key and current version as value only.
+     * @return modified version when valid key and value otherwise null.
+     */
+    Map increment(final Map config) {
+        def modifiedVersion = [:]
+        if (config?.size() == 1) {
+            def key = config*.key[0]
+            def version = config*.value[0]
+
+            if (Version.isValidKey(key) && version.containsKey(key)) {
+                def value = version.get(key)
+                if (Version.isValidValue(value)) {
+                    version.put(key, value + 1)
+                    modifiedVersion = version
+                }
+            }
+        }
+        modifiedVersion
     }
 
     /**
