@@ -78,4 +78,20 @@ class VersionTest {
         assertThat(version.get(gradle:[major:1, minor:0]).toString()).isEqualTo(
             [major:2, minor:1].toString())
     }
+
+    @Test
+    void testGetForMaven() {
+        def script = new MockScript()
+        def version = new Version(script)
+
+        def pomFile = System.getProperty('user.dir') + '/test/resources/pom.default.xml'
+        def text = new File(pomFile).text
+
+        script.provide(text.replace('<version>1.0</version>', '<version>2</version>'))
+        assertThat(version.get(maven:[major:1]).toString()).isEqualTo(
+            [major:2].toString())
+        script.provide(text.replace('<version>1.0</version>', '<version>2.3</version>'))
+        assertThat(version.get(maven:[major:1, minor:0]).toString()).isEqualTo(
+            [major:2, minor:3].toString())
+    }
 }

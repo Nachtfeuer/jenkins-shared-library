@@ -78,6 +78,12 @@ class Version extends Base {
         modifiedVersion
     }
 
+    /**
+     * Get current version depending on tool (maven, gradle, tag).
+     *
+     * @param config key is the tool and value the defined version (policy).
+     * @return current version if found otherwise INVALID_VERSION.
+     */
     Map get(final Map config) {
         def version = Version.INVALID_VERSION
         if (config?.size() == 1) {
@@ -90,6 +96,10 @@ class Version extends Base {
                     def match = content =~ /(?m)^version[ ]*=[ ]*(.*)/
                     version = Version.transpose(match[0][1], version)
                     break
+                case 'maven':
+                    def content = this.script.readFile(file:'pom.xml')
+                    def model = new Parser().parseXml(content)
+                    version = Version.transpose(model.version, version)
             }
         }
         version
