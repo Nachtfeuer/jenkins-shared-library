@@ -4,6 +4,9 @@ package my.tools
  * Versioning handling.
  */
 class Version extends Base {
+    /** Indicator or "invaid version" */
+    public final static Map INVALID_VERSION = [:].asImmutable()
+
     /**
      * Initialize with Jenkinsfile script instance.
      *
@@ -11,6 +14,27 @@ class Version extends Base {
      */
     Version(final script) {
         super(script)
+    }
+
+    /**
+     * Transpose of string version into a version map.
+     *
+     * @param strVersion a version like '1.2.3'.
+     * @param version a version like [major:1, minor:0, patch:0].
+     * @return transposed version when possible or INVALID_VERSION when failed.
+     * @note number of entries have to be same for tokenized strVersion and the version
+     */
+    static Map transpose(final String strVersion, final Map version) {
+        def transposedVersion = Version.INVALID_VERSION
+        if (version.size() > 0) {
+            def tokenizedVersion = strVersion.tokenize('.')
+            def newVersion = [version.keySet().toList(), tokenizedVersion]
+                .transpose().collectEntries { it }
+            if (newVersion.size() == version.size() && tokenizedVersion.size() == version.size()) {
+                transposedVersion = newVersion
+            }
+        }
+        transposedVersion
     }
 
     /**
@@ -52,6 +76,23 @@ class Version extends Base {
             }
         }
         modifiedVersion
+    }
+
+    Map get(final Map config) {
+        def version = Version.INVALID_VERSION
+        if (config?.size() == 1) {
+            def key = config*.key[0]
+            version = config*.value[0]
+
+            switch (key) {
+                case 'gradle':
+                    def content = this.script.readFile(file:'build.gradle')
+                    def match = content =~ /(?m)^version[ ]*=[ ]*(.*)/
+                    version = Version.transpose(match[0][1], version)
+                    break
+            }
+        }
+        version
     }
 
     /**

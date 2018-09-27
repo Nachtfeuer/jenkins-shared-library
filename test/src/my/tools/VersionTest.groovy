@@ -41,4 +41,41 @@ class VersionTest {
         // version number not valid
         assertThat(new Version().increment(major:[major:-1])).isEqualTo([:])
     }
+
+    /** Testing of {@link Version#transpose(String, Map)}. */
+    @Test
+    void testValidTranspose() {
+        assertThat(Version.transpose('2', [major:1]).toString()).isEqualTo(
+            [major:2].toString())
+        assertThat(Version.transpose('2.1', [major:1, minor:0]).toString()).isEqualTo(
+            [major:2, minor:1].toString())
+        assertThat(Version.transpose('3.2.1', [major:1, minor:0, patch:0]).toString()).isEqualTo(
+            [major:3, minor:2, patch:1].toString())
+    }
+
+    /** Testing of {@link Version#transpose(String, Map)}. */
+    @Test
+    void testInvalidTranspose() {
+        assertThat(Version.transpose('2.1', [:])).isEqualTo(
+            Version.INVALID_VERSION)
+        assertThat(Version.transpose('', [major:1])).isEqualTo(
+            Version.INVALID_VERSION)
+        assertThat(Version.transpose('2.1', [major:1])).isEqualTo(
+            Version.INVALID_VERSION)
+        assertThat(Version.transpose('2', [major:1, minor:0])).isEqualTo(
+            Version.INVALID_VERSION)
+    }
+
+    @Test
+    void testGetForGradle() {
+        def script = new MockScript()
+        def version = new Version(script)
+
+        script.provide('version = 2')
+        assertThat(version.get(gradle:[major:1]).toString()).isEqualTo(
+            [major:2].toString())
+        script.provide('version = 2.1')
+        assertThat(version.get(gradle:[major:1, minor:0]).toString()).isEqualTo(
+            [major:2, minor:1].toString())
+    }
 }
