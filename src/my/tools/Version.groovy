@@ -26,12 +26,12 @@ class Version extends Base {
      */
     static Map transpose(final String strVersion, final Map version) {
         def transposedVersion = Version.INVALID_VERSION
-        if (version.size() > 0) {
+        if (version.data && version.data.size() > 0) {
             def tokenizedVersion = strVersion.tokenize('.')
-            def newVersion = [version.keySet().toList(), tokenizedVersion]
+            def newVersion = [version.data.keySet().toList(), tokenizedVersion]
                 .transpose().collectEntries { it }
-            if (newVersion.size() == version.size() && tokenizedVersion.size() == version.size()) {
-                transposedVersion = newVersion
+            if (newVersion.size() == version.data.size() && tokenizedVersion.size() == version.data.size()) {
+                transposedVersion = [data:newVersion, meta:version.meta]
             }
         }
         transposedVersion
@@ -44,12 +44,12 @@ class Version extends Base {
      *         defaulted to 1.0 (major.minor) when not specified.
      */
     Map define(final Map config = [:]) {
-        def version = [major:1, minor:0]
+        def version = [data:[major:1, minor:0], meta:[snapshot:false]]
         if (config.size() > 0) {
             if (config.every { Version.isValidKey(it.key) && Version.isValidValue(it.value) }) {
-                version = config
+                version.data = config
             } else {
-                version = [:]
+                version = Version.INVALID_VERSION
             }
         }
         version
@@ -59,18 +59,17 @@ class Version extends Base {
      * Increment a version part.
      *
      * @param config contain the version part as key and current version as value only.
-     * @return modified version when valid key and value otherwise null.
+     * @return modified version when valid key and value otherwise INVALID_VERSION.
      */
     Map increment(final Map config) {
-        def modifiedVersion = [:]
+        def modifiedVersion = Version.INVALID_VERSION
         if (config?.size() == 1) {
             def key = config*.key[0]
             def version = config*.value[0]
-
-            if (Version.isValidKey(key) && version.containsKey(key)) {
-                def value = version.get(key)
+            if (Version.isValidKey(key) && version.data && version.data.containsKey(key)) {
+                def value = version.data.get(key)
                 if (Version.isValidValue(value)) {
-                    version.put(key, value + 1)
+                    version.data.put(key, value + 1)
                     modifiedVersion = version
                 }
             }
