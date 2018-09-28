@@ -17,6 +17,7 @@ nav:
       - xfind.md
       - xdup.md
       - xparser.md
+      - xversion.md
     - Library:
       - xlocal.md
 
