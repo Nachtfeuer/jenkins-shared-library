@@ -7,6 +7,9 @@ class Version extends Base {
     /** Indicator or "invaid version" */
     public final static Map INVALID_VERSION = [:].asImmutable()
 
+    /** Version extension indicating a snapshot version */
+    private final static String SNAPSHOT = '-SNAPSHOT'
+
     /**
      * Initialize with Jenkinsfile script instance.
      *
@@ -27,11 +30,13 @@ class Version extends Base {
     static Map transpose(final String strVersion, final Map version) {
         def transposedVersion = Version.INVALID_VERSION
         if (version.data && version.data.size() > 0) {
-            def tokenizedVersion = strVersion.tokenize('.')
+            def isSnapshot = strVersion.contains(Version.SNAPSHOT)
+            def tokenizedVersion = strVersion.replace(Version.SNAPSHOT, '').tokenize('.')
             def newVersion = [version.data.keySet().toList(), tokenizedVersion]
                 .transpose().collectEntries { it }
             if (newVersion.size() == version.data.size() && tokenizedVersion.size() == version.data.size()) {
                 transposedVersion = [data:newVersion, meta:version.meta]
+                transposedVersion.meta.snapshot = isSnapshot
             }
         }
         transposedVersion

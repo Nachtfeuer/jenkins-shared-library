@@ -63,6 +63,8 @@ class VersionTest {
             .isEqualTo([data:[major:2, minor:1], meta:[snapshot:false]].toString())
         assertThat(Version.transpose('3.2.1', version.define(major:1, minor:0, patch:0)).toString())
             .isEqualTo([data:[major:3, minor:2, patch:1], meta:[snapshot:false]].toString())
+        assertThat(Version.transpose('3.2-SNAPSHOT', version.define(major:1, minor:0)).toString())
+            .isEqualTo([data:[major:3, minor:2], meta:[snapshot:true]].toString())
     }
 
     /** Testing of {@link Version#transpose(String, Map)}. */
