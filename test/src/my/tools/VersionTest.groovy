@@ -11,9 +11,9 @@ class VersionTest {
     @Test
     void testDefineValidVersion() {
         assertThat(new Version().define())
-            .isEqualTo([data:[major:1, minor:0], meta:[snapshot:false]])
+            .isEqualTo([data:[major:1, minor:0], meta:[snapshot:false, prefix:'v']])
         assertThat(new Version().define(major:0, minor:0, patch:1))
-            .isEqualTo([data:[major:0, minor:0, patch:1], meta:[snapshot:false]])
+            .isEqualTo([data:[major:0, minor:0, patch:1], meta:[snapshot:false, prefix:'v']])
     }
 
     /** Testing defining of invalid version. */
@@ -30,9 +30,9 @@ class VersionTest {
     void testIncrementValidVersion() {
         def version = new Version()
         assertThat(version.increment(major:version.define(major:0, minor:0)))
-            .isEqualTo([data:[major:1, minor:0], meta:[snapshot:false]])
+            .isEqualTo([data:[major:1, minor:0], meta:[snapshot:false, prefix:'v']])
         assertThat(version.increment(minor:version.define(major:0, minor:0)))
-            .isEqualTo([data:[major:0, minor:1], meta:[snapshot:false]])
+            .isEqualTo([data:[major:0, minor:1], meta:[snapshot:false, prefix:'v']])
     }
 
     /** Testing incrementing of invalid version. */
@@ -49,7 +49,7 @@ class VersionTest {
         assertThat(version.increment(MAJOR:version.define(major:0)))
             .isEqualTo(Version.INVALID_VERSION)
         // version number not valid
-        assertThat(version.increment(major:[data:[major:-1], meta:[snapshot:false]]))
+        assertThat(version.increment(major:[data:[major:-1], meta:[snapshot:false, prefix:'v']]))
             .isEqualTo(Version.INVALID_VERSION)
     }
 
@@ -58,13 +58,13 @@ class VersionTest {
     void testValidTranspose() {
         def version = new Version()
         assertThat(Version.transpose('2', version.define(major:1)).toString())
-            .isEqualTo([data:[major:2], meta:[snapshot:false]].toString())
+            .isEqualTo([data:[major:2], meta:[snapshot:false, prefix:'v']].toString())
         assertThat(Version.transpose('2.1', version.define(major:1, minor:0)).toString())
-            .isEqualTo([data:[major:2, minor:1], meta:[snapshot:false]].toString())
+            .isEqualTo([data:[major:2, minor:1], meta:[snapshot:false, prefix:'v']].toString())
         assertThat(Version.transpose('3.2.1', version.define(major:1, minor:0, patch:0)).toString())
-            .isEqualTo([data:[major:3, minor:2, patch:1], meta:[snapshot:false]].toString())
+            .isEqualTo([data:[major:3, minor:2, patch:1], meta:[snapshot:false, prefix:'v']].toString())
         assertThat(Version.transpose('3.2-SNAPSHOT', version.define(major:1, minor:0)).toString())
-            .isEqualTo([data:[major:3, minor:2], meta:[snapshot:true]].toString())
+            .isEqualTo([data:[major:3, minor:2], meta:[snapshot:true, prefix:'v']].toString())
     }
 
     /** Testing of {@link Version#transpose(String, Map)}. */
@@ -89,10 +89,10 @@ class VersionTest {
 
         script.provide('version = 2')
         assertThat(version.get(gradle:version.define(major:1)).toString())
-            .isEqualTo([data:[major:2], meta:[snapshot:false]].toString())
+            .isEqualTo([data:[major:2], meta:[snapshot:false, prefix:'v']].toString())
         script.provide('version = 2.1')
         assertThat(version.get(gradle:version.define(major:1, minor:0)).toString())
-            .isEqualTo([data:[major:2, minor:1], meta:[snapshot:false]].toString())
+            .isEqualTo([data:[major:2, minor:1], meta:[snapshot:false, prefix:'v']].toString())
     }
 
     /** Testing of {@link Version#get(Map)} for maven */
@@ -106,10 +106,24 @@ class VersionTest {
 
         script.provide(text.replace('<version>1.0</version>', '<version>2</version>'))
         assertThat(version.get(maven:version.define(major:1)).toString())
-            .isEqualTo([data:[major:2], meta:[snapshot:false]].toString())
+            .isEqualTo([data:[major:2], meta:[snapshot:false, prefix:'v']].toString())
 
         script.provide(text.replace('<version>1.0</version>', '<version>2.3</version>'))
         assertThat(version.get(maven:version.define(major:1, minor:0)).toString())
-            .isEqualTo([data:[major:2, minor:3], meta:[snapshot:false]].toString())
+            .isEqualTo([data:[major:2, minor:3], meta:[snapshot:false, prefix:'v']].toString())
+    }
+
+    /** Testing of {@link Version#get(Map)} for tag */
+    @Test
+    void testGetForTag() {
+        def script = new MockScript()
+        def version = new Version(script)
+
+        script.provide('v2')
+        assertThat(version.get(tag:version.define(major:1)).toString())
+            .isEqualTo([data:[major:2], meta:[snapshot:false, prefix:'v']].toString())
+        script.provide('v1.2')
+        assertThat(version.get(tag:version.define(major:1, minor:0)).toString())
+            .isEqualTo([data:[major:1, minor:2], meta:[snapshot:false, prefix:'v']].toString())
     }
 }

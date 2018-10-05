@@ -49,7 +49,7 @@ class Version extends Base {
      *         defaulted to 1.0 (major.minor) when not specified.
      */
     Map define(final Map config = [:]) {
-        def version = [data:[major:1, minor:0], meta:[snapshot:false]]
+        def version = [data:[major:1, minor:0], meta:[snapshot:false, prefix:'v']]
         if (config.size() > 0) {
             if (config.every { Version.isValidKey(it.key) && Version.isValidValue(it.value) }) {
                 version.data = config
@@ -104,6 +104,14 @@ class Version extends Base {
                     def content = this.script.readFile(file:'pom.xml')
                     def model = new Parser().parseXml(content)
                     version = Version.transpose(model.version, version)
+                    break
+                case 'tag':
+                    def content = new Git(this.script).lastTag
+                    if (!version.meta.prefix.isEmpty() && content.startsWith(version.meta.prefix)) {
+                        content = content[version.meta.prefix.size()..content.size() - 1]
+                    }
+                    version = Version.transpose(content, version)
+                    break
             }
         }
         version
