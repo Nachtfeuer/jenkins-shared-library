@@ -104,6 +104,10 @@
                     
     <a class="" href="../xparser/">Parser</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../xversion/">Versioning and Tagging</a>
+                </li>
     </ul>
 	    </li>
           
@@ -254,11 +258,24 @@ following DSL functions are implemented:</p>
 <tr>
 <td>withEnv</td>
 <td>stage</td>
+<td>xparser</td>
+<td>xfind</td>
+</tr>
+<tr>
+<td>xpublish</td>
+<td>xgit</td>
+<td>xgradle</td>
+<td>xrender</td>
+</tr>
+<tr>
+<td>xversion</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<p><strong>Please note</strong>: The DSL <strong>xpublish</strong> does not do anything locally.</p>
 <h2 id="is-vars-dead-code">Is vars dead code?</h2>
 <p>At least I have not found a way (yet) how to use it without Jenkins.
 The <strong>ScriptExecutor</strong> expects an abstract class that implements those DSL
@@ -276,7 +293,7 @@ implementation using dependency injection under <code>src/**</code>.</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="../xparser/" class="btn btn-neutral" title="Parser"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../xversion/" class="btn btn-neutral" title="Versioning and Tagging"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -304,7 +321,7 @@ implementation using dependency injection under <code>src/**</code>.</p>
           <a href="https://github.com/Nachtfeuer/jenkins-shared-library/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../xparser/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../xversion/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
     </span>
