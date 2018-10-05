@@ -5,6 +5,7 @@ import org.junit.Test
 
 import my.tools.Git
 import my.tools.Gradle
+import my.tools.Version
 
 /**
  * Testing of class {@link Jenkins}.
@@ -130,8 +131,14 @@ class JenkinsTest {
     @Test
     void testGit() {
         def jenkins = [:] as Jenkins
+
+        def gitUrls = [
+            'https://github.com/Nachtfeuer/jenkins-shared-library.git',
+            'git@github.com:Nachtfeuer/jenkins-shared-library.git'
+        ]
+
         assertThat(jenkins.xgit).isInstanceOf(Git)
-        assertThat(jenkins.xgit.url).isEqualTo('https://github.com/Nachtfeuer/jenkins-shared-library.git')
+        assertThat(gitUrls).contains(jenkins.xgit.url)
         assertThat(jenkins.xgit.authorName).isEqualTo('Thomas Lehmann')
         assertThat(jenkins.xgit.authorMail).isEqualTo('thomas.lehmann.private@gmail.com')
     }
@@ -152,5 +159,12 @@ class JenkinsTest {
              '<v>2</v><v>4</v><v>6</v><v>8</v><v>10</v>')
         assertThat(jenkins.xrender('model.values.each{ yieldUnescaped("$it ") }', model)).isEqualTo(
              '2 4 6 8 10 ')
+    }
+
+    /** Testing xversion DSL */
+    @Test
+    void testVersion() {
+        def jenkins = [:] as Jenkins
+        assertThat(jenkins.xversion).isInstanceOf(Version)
     }
 }

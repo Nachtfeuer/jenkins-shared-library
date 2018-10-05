@@ -5,6 +5,7 @@ import my.tools.Find
 import my.tools.Git
 import my.tools.Gradle
 import my.tools.Renderer
+import my.tools.Version
 
 /**
  * DSL Implementation for local use.
@@ -172,4 +173,14 @@ abstract class Jenkins extends Script {
     String xrender(final String template, final Map model) {
         new Renderer(this).render(template, model)
     }
+
+    /**
+     * Providing xversion object.
+     *
+     * @return xversion object
+     */
+    def getXversion() {
+        new Version(this)
+    }
+
 }
