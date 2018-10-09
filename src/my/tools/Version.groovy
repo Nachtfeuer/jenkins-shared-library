@@ -9,6 +9,8 @@ class Version extends Base {
 
     /** Version extension indicating a snapshot version */
     private final static String SNAPSHOT = '-SNAPSHOT'
+    /** Version dot. */
+    private final static String DOT = '.'
 
     /**
      * Initialize with Jenkinsfile script instance.
@@ -31,7 +33,7 @@ class Version extends Base {
         def transposedVersion = Version.INVALID_VERSION
         if (version.data && version.data.size() > 0) {
             def isSnapshot = strVersion.contains(Version.SNAPSHOT)
-            def tokenizedVersion = strVersion.replace(Version.SNAPSHOT, '').tokenize('.')
+            def tokenizedVersion = strVersion.replace(Version.SNAPSHOT, '').tokenize(Version.DOT)
             def newVersion = [version.data.keySet().toList(), tokenizedVersion]
                 .transpose().collectEntries { it }
             if (newVersion.size() == version.data.size() && tokenizedVersion.size() == version.data.size()) {
@@ -40,6 +42,24 @@ class Version extends Base {
             }
         }
         transposedVersion
+    }
+
+    /**
+     * Version as string for pom.xml or build.gradle.
+     *
+     * @return version as string.
+     */
+    static String stringify(final Map version) {
+        version.data*.value.join(Version.DOT) + (version.meta.snapshot ? Version.SNAPSHOT : '')
+    }
+
+    /**
+     * Version as tag string.
+     *
+     * @return version as string.
+     */
+    static String stringifyForTag(final Map version) {
+        version.meta.prefix + version.data*.value.join(Version.DOT)
     }
 
     /**
@@ -115,6 +135,34 @@ class Version extends Base {
             }
         }
         version
+    }
+
+    /**
+     * Apply version depending on tool.
+     *
+     * @param config as named parameter like: maven:version.
+     *        key is the tool and value is expected to be a valid version.
+     */
+    void apply(final Map config) {
+        if (config?.size() == 1) {
+            def key = config*.key[0]
+            def version = config*.value[0]
+
+            switch (key) {
+                case 'maven':
+                    def newVersion = Version.stringify(version)
+                    this.script.sh(script:"mvn -B versions:set -DnewVersion=$newVersion")
+                    break
+                case 'gradle':
+                   def newVersion = Version.stringify(version)
+                   this.script.sh(script:"sed -i 's:version[ ]*=.*:version = $newVersion:g' build.gradle")
+                   break
+                case 'tag':
+                   def newVersion = Version.stringifyForTag(version)
+                   this.script.sh(script:"git tag $newVersion;git push --tags")
+                   break
+            }
+        }
     }
 
     /**

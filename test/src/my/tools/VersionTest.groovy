@@ -126,4 +126,69 @@ class VersionTest {
         assertThat(version.get(tag:version.define(major:1, minor:0)).toString())
             .isEqualTo([data:[major:1, minor:2], meta:[snapshot:false, prefix:'v']].toString())
     }
+
+    /** Testing of {@link Version.stringify(String)} and {@link Version.stringifyForTag(String)}. */
+    @Test
+    void testStringify() {
+        assertThat(Version.stringify([data:[major:1, minor:2], meta:[snapshot:false, prefix:'v']]))
+            .isEqualTo('1.2')
+        assertThat(Version.stringify([data:[major:1, minor:2], meta:[snapshot:true, prefix:'v']]))
+            .isEqualTo('1.2-SNAPSHOT')
+
+        assertThat(Version.stringifyForTag([data:[major:1, minor:2], meta:[snapshot:true, prefix:'v']]))
+            .isEqualTo('v1.2')
+        assertThat(Version.stringifyForTag([data:[major:1, minor:2], meta:[snapshot:false, prefix:'v']]))
+            .isEqualTo('v1.2')
+    }
+
+    /** Testing {@link Version#apply(Map)} for Maven. */
+    @Test
+    void testApplyMaven() {
+        def script = new MockScript()
+        def version = new Version(script)
+
+        def currentVersion = [data:[major:1, minor:2], meta:[snapshot:false, prefix:'v']]
+        version.apply(maven:currentVersion)
+        assertThat(script.calls.size()).isEqualTo(1)
+        assertThat(script.calls.get(0).toString()).isEqualTo(
+            ['sh', [script:'mvn -B versions:set -DnewVersion=1.2']].toString())
+
+        currentVersion = [data:[major:1, minor:2], meta:[snapshot:true, prefix:'v']]
+        version.apply(maven:currentVersion)
+        assertThat(script.calls.size()).isEqualTo(2)
+        assertThat(script.calls.get(1).toString()).isEqualTo(
+            ['sh', [script:'mvn -B versions:set -DnewVersion=1.2-SNAPSHOT']].toString())
+    }
+
+    /** Testing {@link Version#apply(Map)} for Gradle. */
+    @Test
+    void testApplyGradle() {
+        def script = new MockScript()
+        def version = new Version(script)
+
+        def currentVersion = [data:[major:1, minor:2], meta:[snapshot:false, prefix:'v']]
+        version.apply(gradle:currentVersion)
+        assertThat(script.calls.size()).isEqualTo(1)
+        assertThat(script.calls.get(0).toString()).isEqualTo(
+            ['sh', [script:"sed -i 's:version[ ]*=.*:version = 1.2:g' build.gradle"]].toString())
+
+        currentVersion = [data:[major:1, minor:2], meta:[snapshot:true, prefix:'v']]
+        version.apply(gradle:currentVersion)
+        assertThat(script.calls.size()).isEqualTo(2)
+        assertThat(script.calls.get(1).toString()).isEqualTo(
+            ['sh', [script:"sed -i 's:version[ ]*=.*:version = 1.2-SNAPSHOT:g' build.gradle"]].toString())
+    }
+
+    /** Testing {@link Version#apply(Map)} for tag. */
+    @Test
+    void testApplyTag() {
+        def script = new MockScript()
+        def version = new Version(script)
+
+        def currentVersion = [data:[major:1, minor:2], meta:[snapshot:false, prefix:'v']]
+        version.apply(tag:currentVersion)
+        assertThat(script.calls.size()).isEqualTo(1)
+        assertThat(script.calls.get(0).toString()).isEqualTo(
+            ['sh', [script:'git tag v1.2;git push --tags']].toString())
+    }
 }

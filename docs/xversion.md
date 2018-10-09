@@ -12,24 +12,24 @@ are the initial version when there is no version yet.
 
 ```groovy
 def version = xversion.define(major:1, minor:0, patch:0)
-println(version) // prints [major:1, minor:0, patch:0]
+println(version) // prints [data:[major:1, minor:0, patch:0], meta:[snapshot:false, prefix:'v']]
 ```
 
 or
 
 ```groovy
 def version = xversion.define()
-println(version) // prints [major:1, minor:0]
+println(version) // prints [data:[major:1, minor:0], meta:[snapshot:false, prefix:'v']]
 ```
 
-### Defining the incrementor
+### Increment the version
 
 The incrementor - as the name says - increments a version part.
 
 ```groovy
 def version = xversion.define(major:1, minor:0, patch:0)
 version = xversion.increment(major:version)
-println(version) // prints [major:2, minor:0, patch:0]
+println(version) // prints [data:[major:2, minor:0, patch:0], meta:[snapshot:false, prefix,'v']]
 ```
 
 or
@@ -37,7 +37,7 @@ or
 ```groovy
 def version = xversion.define(major:2, minor:0, patch:0)
 version = xversion.increment(minor:version)
-println(version) // prints [major:2, minor:1, patch:0]
+println(version) // prints [data:[major:2, minor:1, patch:0], meta:[snapshot:false, prefix,'v']]
 ```
 
 ### Retrieving current version
@@ -61,4 +61,5 @@ It does change the version either in the `pom.xml` or in the `build.gradle`:
 ```groovy
 xversion.apply(maven:version)   // adjusts the pom.xml
 xversion.apply(gradle:version)  // adjusts the version field in the build.gradle
+xversion.apply(tag:version)     // creates and pushes version as tag
 ```

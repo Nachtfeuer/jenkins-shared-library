@@ -29,3 +29,13 @@ Map increment(final Map config) {
 Map get(final Map config) {
     new Version(this).get(config)
 }
+
+/**
+ * Apply version depending on tool.
+ *
+ * @param config as named parameter like: maven:version.
+ *        key is the tool and value is expected to be a valid version.
+ */
+void apply(final Map config) {
+    new Version(this).apply(config)
+}
