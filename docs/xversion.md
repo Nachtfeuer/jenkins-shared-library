@@ -15,7 +15,7 @@ def version = xversion.define(major:1, minor:0, patch:0)
 println(version) // prints [data:[major:1, minor:0, patch:0], meta:[snapshot:false, prefix:'v']]
 ```
 
-or
+or using *major* and *minor* as default policy:
 
 ```groovy
 def version = xversion.define()
