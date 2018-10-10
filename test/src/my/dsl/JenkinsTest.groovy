@@ -167,4 +167,16 @@ class JenkinsTest {
         def jenkins = [:] as Jenkins
         assertThat(jenkins.xversion).isInstanceOf(Version)
     }
+
+    /** Testing of virtualenv DSL */
+    @Test
+    void testVirtualEnv() {
+        def jenkins = [:] as Jenkins
+        jenkins.virtualenv {
+            // virtual environment should be created
+            assertThat(new File('venv').exists()).isEqualTo(true)
+        }
+        // virtual environment should be removed
+        assertThat(new File('venv').exists()).isEqualTo(false)
+    }
 }

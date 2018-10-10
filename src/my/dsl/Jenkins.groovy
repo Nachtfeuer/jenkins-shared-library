@@ -6,6 +6,7 @@ import my.tools.Git
 import my.tools.Gradle
 import my.tools.Renderer
 import my.tools.Version
+import my.tools.VirtualEnv
 
 /**
  * DSL Implementation for local use.
@@ -15,7 +16,9 @@ abstract class Jenkins extends Script {
     /** newline constant */
     private final static String NEWLINE = '\n'
     /** environment variables */
-    private final Map theEnv = [:]
+    private final Map theEnv = [PATH:System.getenv('PATH')]
+    /** current working path */
+    private final String theCurrentPath = System.getProperty('user.dir')
 
     /**
      * Provide current environment variables (read only).
@@ -25,6 +28,11 @@ abstract class Jenkins extends Script {
      */
     Map getEnv() {
         this.theEnv.asImmutable()
+    }
+
+    /** Simulates pwd DSL in Jenkins. */
+    String pwd() {
+        this.theCurrentPath
     }
 
     /**
@@ -183,4 +191,18 @@ abstract class Jenkins extends Script {
         new Version(this)
     }
 
+    /**
+     * Provides a Python virtual environment inside the block (closure).
+     *
+     * @param requirements optional list of requirements (Python mododules or tools)
+     * @param folderName optional folder name (default: venv)
+     * @return whatever the inner block does return.
+     */
+    def virtualenv(final List<String> requirements=[], final String folderName='venv', final Closure body) {
+        new VirtualEnv(this)
+            .configure(folderName:folderName, requirements:requirements)
+            .process {
+            body()
+        }
+    }
 }
