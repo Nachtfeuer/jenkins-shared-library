@@ -7,6 +7,7 @@ import my.tools.Gradle
 import my.tools.Renderer
 import my.tools.Version
 import my.tools.VirtualEnv
+import my.tools.DuplicateCodeFinder
 
 /**
  * DSL Implementation for local use.
@@ -205,4 +206,28 @@ abstract class Jenkins extends Script {
             body()
         }
     }
+
+    /**
+    * Checking for duplicate code for files in the list.
+    * @param files path and filenames of code that should be checked.
+    * @param policies Map of policies; possible fields are listed below.
+    *
+    * <b>minimumBlockSize<b>: minimum number of lines that count as duplicate code (default: 4)<br/>
+    * <b>ignoreCase<b>: when true the letter case will be ignored (default: false)<br/>
+    * <b>ignoreWhitespaces</b>: when true then spaces and tabs are ignored (default: false)<br/>
+    * <b>percentageSimilarity</b>: when 100% then exact match otherwise partial match
+    *    depending on percentags (default: 100)
+    */
+    boolean xdup(final List<String> files, final Map policies = [:]) {
+        def api = new DuplicateCodeFinder(this)
+        api.with {
+            sourceFiles = files
+            minimumBlockSize = policies.minimumBlockSize ?: 4
+            ignoreCase = policies.ignorecase ?: false
+            ignoreWhitespaces = policies.ignoreWhitespaces ?: false
+            percentageSimilarity = policies.percentageSimilarity ?: 100.0
+            check()
+        }
+    }
+
 }

@@ -179,4 +179,19 @@ class JenkinsTest {
         // virtual environment should be removed
         assertThat(new File('venv').exists()).isEqualTo(false)
     }
+
+    /** Testing of xdup DSL */
+    @Test
+    void testDuplicateCodeChecker() {
+        def jenkins = [:] as Jenkins
+        assertThat(new File('duplicates').exists()).isEqualTo(false)
+
+        def listOfSource = jenkins.xfind.files(System.getProperty('user.dir') + '/test', '*.groovy')
+        jenkins.xdup(listOfSource)
+        assertThat(new File('duplicates/index.html').exists()).isEqualTo(true)
+
+        // cleanup
+        'rm -rf duplicates'.execute().text.eachLine { jenkins.echo(it) }
+        assertThat(new File('duplicates').exists()).isEqualTo(false)
+    }
 }
