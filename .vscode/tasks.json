@@ -13,12 +13,6 @@
         "command": "gradle",
         "args": [ "test", "-it" ]
     }, {
-        "label": "Gradle - release (tagging and publish)",
-        "type": "shell",
-        "group": "build",
-        "command": "gradle",
-        "args": [ "release", "-Prelease.disableChecks", "-Prelease.pushTagsOnly"]
-    }, {
         "label": "Mkdocs - build documentation",
         "type": "shell",
         "group": "build",
@@ -30,5 +24,10 @@
         "group": "build",
         "command": "mkdocs",
         "args": ["serve"]
+    }, {
+        "label": "Jenkins - start (Docker)",
+        "type": "shell",
+        "group": "build",
+        "command": "docker run --rm --name=jenkins -v /work/docker/jenkins:/var/jenkins_home -p 8080:8080 -d jenkinsci/blueocean"
     }]
 }
