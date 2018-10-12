@@ -170,6 +170,7 @@
 <li><a href="#versioning-and-tagging">Versioning and Tagging</a><ul>
 <li><a href="#versioning">Versioning</a><ul>
 <li><a href="#defining-your-version">Defining your version</a></li>
+<li><a href="#version-as-string">Version as string</a></li>
 <li><a href="#increment-the-version">Increment the version</a></li>
 <li><a href="#retrieving-current-version">Retrieving current version</a></li>
 <li><a href="#applying-version-to-tool">Applying version to tool</a></li>
@@ -191,6 +192,14 @@ println(version) // prints [data:[major:1, minor:0, patch:0], meta:[snapshot:fal
 <p>or using <em>major</em> and <em>minor</em> as default policy:</p>
 <pre><code class="groovy">def version = xversion.define()
 println(version) // prints [data:[major:1, minor:0], meta:[snapshot:false, prefix:'v']]
+</code></pre>
+
+<h3 id="version-as-string">Version as string</h3>
+<p>If the <code>version.meta.snapshot</code> is true then <em>stringify</em> appends `-SNAPSHOT'
+(<em>stringifyForTag</em> does not):</p>
+<pre><code class="groovy">def version = xversion.define()
+println(xversion.stringify(version)) // prints '1.0'
+println(xversion.stringifyForTag(version)) // prints 'v1.0'
 </code></pre>
 
 <h3 id="increment-the-version">Increment the version</h3>
