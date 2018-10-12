@@ -22,6 +22,17 @@ def version = xversion.define()
 println(version) // prints [data:[major:1, minor:0], meta:[snapshot:false, prefix:'v']]
 ```
 
+### Version as string
+
+If the `version.meta.snapshot` is true then *stringify* appends `-SNAPSHOT'
+(*stringifyForTag* does not):
+
+```groovy
+def version = xversion.define()
+println(xversion.stringify(version)) // prints '1.0'
+println(xversion.stringifyForTag(version)) // prints 'v1.0'
+```
+
 ### Increment the version
 
 The incrementor - as the name says - increments a version part.

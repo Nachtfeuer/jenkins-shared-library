@@ -39,3 +39,23 @@ Map get(final Map config) {
 void apply(final Map config) {
     new Version(this).apply(config)
 }
+
+/**
+ * Version as string for pom.xml or build.gradle.
+ *
+ * @param version valid version structure.
+ * @return version as string.
+ */
+String stringify(final Map version) {
+    Version.stringify(version)
+}
+
+/**
+ * Version as tag string.
+ *
+ * @param version valid version structure.
+ * @return version as string.
+ */
+String stringifyForTag(final Map version) {
+    Version.stringifyForTag(version)
+}

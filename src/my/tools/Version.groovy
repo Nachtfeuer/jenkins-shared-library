@@ -47,6 +47,7 @@ class Version extends Base {
     /**
      * Version as string for pom.xml or build.gradle.
      *
+     * @param version valid version structure.
      * @return version as string.
      */
     static String stringify(final Map version) {
@@ -56,6 +57,7 @@ class Version extends Base {
     /**
      * Version as tag string.
      *
+     * @param version valid version structure.
      * @return version as string.
      */
     static String stringifyForTag(final Map version) {
