@@ -3,6 +3,7 @@ package my.tools
 /**
  * Versioning handling.
  */
+@SuppressWarnings(['UnnecessaryCollectCall'])
 class Version extends Base {
     /** Indicator or "invaid version" */
     public final static Map INVALID_VERSION = [:].asImmutable()
@@ -51,7 +52,8 @@ class Version extends Base {
      * @return version as string.
      */
     static String stringify(final Map version) {
-        version.data*.value.join(Version.DOT) + (version.meta.snapshot ? Version.SNAPSHOT : '')
+        version.data.collect { it.value } .join(Version.DOT) +
+            (version.meta.snapshot ? Version.SNAPSHOT : '')
     }
 
     /**
@@ -61,7 +63,7 @@ class Version extends Base {
      * @return version as string.
      */
     static String stringifyForTag(final Map version) {
-        version.meta.prefix + version.data*.value.join(Version.DOT)
+        version.meta.prefix + version.data.collect { it.value } .join(Version.DOT)
     }
 
     /**
@@ -91,8 +93,8 @@ class Version extends Base {
     Map increment(final Map config) {
         def modifiedVersion = Version.INVALID_VERSION
         if (config?.size() == 1) {
-            def key = config*.key[0]
-            def version = config*.value[0]
+            def key = config.collect { it.key } [0]
+            def version = config.collect { it.value } [0]
             if (Version.isValidKey(key) && version.data && version.data.containsKey(key)) {
                 def value = version.data.get(key)
                 if (Version.isValidValue(value)) {
@@ -113,8 +115,8 @@ class Version extends Base {
     Map get(final Map config) {
         def version = Version.INVALID_VERSION
         if (config?.size() == 1) {
-            def key = config*.key[0]
-            version = config*.value[0]
+            def key = config.collect { it.key } [0]
+            version = config.collect { it.value } [0]
 
             switch (key) {
                 case 'gradle':
@@ -147,8 +149,8 @@ class Version extends Base {
      */
     void apply(final Map config) {
         if (config?.size() == 1) {
-            def key = config*.key[0]
-            def version = config*.value[0]
+            def key = config.collect { it.key } [0]
+            def version = config.collect { it.value } [0]
 
             switch (key) {
                 case 'maven':
