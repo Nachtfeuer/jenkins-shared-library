@@ -13,7 +13,7 @@ class Git extends Base {
     /** git author mail of last commit */
     public final static String AUTHOR_MAIL_CMD = 'git show -s --format="%ae"'
     /** git get last tag */
-    public final static String LAST_TAG_CMD = 'git describe --tags --abbrev=1'
+    public final static String LAST_TAG_CMD = 'git describe --tags --abbrev=0'
 
     /**
      * Initializing with Jenkinsfile script instance only.

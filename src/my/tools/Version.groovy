@@ -130,11 +130,16 @@ class Version extends Base {
                     version = Version.transpose(model.version, version)
                     break
                 case 'tag':
-                    def content = new Git(this.script).lastTag
-                    if (!version.meta.prefix.isEmpty() && content.startsWith(version.meta.prefix)) {
-                        content = content[version.meta.prefix.size()..content.size() - 1]
+                    try {
+                        def content = new Git(this.script).lastTag
+                        if (!version.meta.prefix.isEmpty() && content.startsWith(version.meta.prefix)) {
+                            content = content[version.meta.prefix.size()..content.size() - 1]
+                        }
+                        version = Version.transpose(content, version)
+                    } catch (err) {
+                        def tag = Version.stringifyForTag(version)
+                        this.script.echo("No tag found, using version provided ($tag)!")
                     }
-                    version = Version.transpose(content, version)
                     break
             }
         }

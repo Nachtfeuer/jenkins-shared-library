@@ -127,6 +127,17 @@ class VersionTest {
             .isEqualTo([data:[major:1, minor:2], meta:[snapshot:false, prefix:'v']].toString())
     }
 
+    /** Testing of {@link Version#get(Map)} for tag */
+    @Test
+    void testGetForTagWithNoTagGiven() {
+        def script = new MockScript()
+        def version = new Version(script)
+
+        script.metaClass.sh = { config -> throw new AssertionError('no tag') }
+        assertThat(version.get(tag:version.define()).toString())
+            .isEqualTo([data:[major:1, minor:0], meta:[snapshot:false, prefix:'v']].toString())
+    }
+
     /** Testing of {@link Version.stringify(String)} and {@link Version.stringifyForTag(String)}. */
     @Test
     void testStringify() {

@@ -41,6 +41,11 @@ class MockScript {
         this.publish.asImmutable()
     }
 
+    /** mock of the Jenkins echo DSL function. */
+    void echo(final String message) {
+        this.calls.add(['echo', message])
+    }
+
     /** mock of the Jenkins sh DSL function. */
     def sh(final Map config) {
         this.calls.add(['sh', config])
