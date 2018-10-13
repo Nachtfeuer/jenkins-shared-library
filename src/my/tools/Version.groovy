@@ -35,7 +35,7 @@ class Version extends Base {
         if (version.data && version.data.size() > 0) {
             def isSnapshot = strVersion.contains(Version.SNAPSHOT)
             def tokenizedVersion = strVersion.replace(Version.SNAPSHOT, '').tokenize(Version.DOT)
-            def newVersion = [version.data.keySet().toList(), tokenizedVersion]
+            def newVersion = [version.data.keySet().toList(), tokenizedVersion.collect { it.toInteger() } ]
                 .transpose().collectEntries { it }
             if (newVersion.size() == version.data.size() && tokenizedVersion.size() == version.data.size()) {
                 transposedVersion = [data:newVersion, meta:version.meta]
