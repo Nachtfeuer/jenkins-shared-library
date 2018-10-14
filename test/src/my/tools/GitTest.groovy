@@ -62,4 +62,21 @@ class GitTest {
         def git = new Git(script)
         assertThat(git.lastTag).isEqualTo('v0.1')
     }
+
+    /**
+     * Testing of method {@link Git#getChancesSinceLastTag()}.
+     */
+    @Test
+    void testGitChangesSinceLastTag() {
+        def script = new MockScript()
+        def git = new Git(script)
+
+        script.provide('')
+        script.provide('v1.0')
+        assertThat(git.changesSinceLastTag).isEqualTo(false)
+
+        script.provide('xxx')
+        script.provide('v1.0')
+        assertThat(git.changesSinceLastTag).isEqualTo(true)
+    }
 }

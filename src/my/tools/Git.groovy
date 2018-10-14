@@ -61,4 +61,19 @@ class Git extends Base {
     String getLastTag() {
         this.script.sh(script:LAST_TAG_CMD, returnStdout:true)
     }
+
+    /**
+     * Checking for changes since last tag
+     * @return true when a change has been detected otherwise false
+     * @note it works well only if you have tags.
+     */
+    boolean getChangesSinceLastTag() {
+        try {
+            def tag = this.lastTag
+            !this.script.sh(script:"git diff $tag", returnStdout:true).trim().isEmpty()
+        } catch (err) {
+            this.script.echo('Git.getChangesSinceLastTag() :: Failed to detect changes (err.message)')
+            false
+        }
+    }
 }
