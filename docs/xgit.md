@@ -10,7 +10,7 @@ echo('Git url: ' + xgit.url)
 echo('Git author name: ' + xgit.authorName)
 echo('Git author mail: ' + xgit.authorMail)
 echo('Git last tag: ' + xgit.lastTag)
-echo('Git changes since last tag: ' + xgit.changesSincelastTag)
+echo('Git changes since last tag: ' + xgit.changesSinceLastTag)
 ```
 
 **Please note**:
