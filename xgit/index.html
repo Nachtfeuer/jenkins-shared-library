@@ -89,15 +89,6 @@
     <a class="current" href="./">Git DSL</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#git-dsl">Git DSL</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#usage">Usage</a></li>
-        
-        </ul>
-    
-
     </ul>
                 </li>
                 <li class="">
@@ -174,16 +165,93 @@
             <div class="section">
               
                 <h1 id="git-dsl">Git DSL</h1>
+<div class="toc">
+<ul>
+<li><a href="#git-dsl">Git DSL</a><ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#example-pipeline">Example pipeline</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <h2 id="usage">Usage</h2>
 <pre><code class="groovy">echo('Git short commit: ' + xgit.shortCommit)
 echo('Git url: ' + xgit.url)
 echo('Git author name: ' + xgit.authorName)
 echo('Git author mail: ' + xgit.authorMail)
 echo('Git last tag: ' + xgit.lastTag)
+echo('Git changes since last tag: ' + xgit.changesSincelastTag)
 </code></pre>
 
 <p><strong>Please note</strong>:
  - In a declarative pipeline you have to place it in a <code>script { ... }</code> block.</p>
+<h2 id="example-pipeline">Example pipeline</h2>
+<p>The pipeline show here does not build anything; it's just the focus on Git and versioning.
+The choosen model is <strong>semantic versioning</strong> means  we do not write a version into a pom.xml
+or a build.gradle (or any other build file). The latest version is fetch from last tag;
+if you don't have a tag yet the version specified by <code>define</code> is taken.</p>
+<p>In given example the branch <em>master</em> is defined as only release branch; for all other branch
+we specify the version as snapshot. For the release branch we do tagging only.</p>
+<p>Tagging will be disabled if there is no change detected since last tag.</p>
+<pre><code class="groovy">@Library('jenkins-shared-library@master') _
+
+def currentVersion = [:]
+def taggingEnabled = false
+
+pipeline {
+    agent any
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        disableConcurrentBuilds()
+        timestamps()
+        ansiColor('xterm')
+        timeout(time: 10, unit: 'MINUTES')
+    }
+
+    stages {
+        stage('Prepare') {
+            steps {
+                script {
+                    // defines your version policy (default here: major.minor)
+                    currentVersion = xversion.define()
+                    // trying to get current version from (last) tag
+                    currentVersion = xversion.get(tag:currentVersion)
+                    // master branch is release here; all other branches are snapshots
+                    currentVersion.meta.snapshot = !env.BRANCH_NAME.equals('master')
+
+                    def hasChanges = xgit.changesSinceLastTag
+                    def description = &quot;&lt;b&gt;commit&lt;/b&gt;: ${xgit.shortCommit}, &lt;b&gt;lastAuthor&lt;/b&gt;: ${xgit.authorName}&quot;
+
+                    if (!hasChanges) {
+                        description = description + &quot;&lt;br/&gt;No changes!&quot;
+                    }
+
+                    currentBuild.description = description
+                    // release branch (here: master) increments only
+                    if (env.BRANCH_NAME.equals('master') &amp;&amp; hasChanges) {
+                        currentVersion = xversion.increment(minor:currentVersion)
+                        taggingEnabled = true
+                    }
+                    currentBuild.displayName = '#' + env.BUILD_NUMBER + ' - ' + xversion.stringifyForTag(currentVersion)
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                if ('master'.equals(env.BRANCH_NAME) &amp;&amp; taggingEnabled) {
+                    sshagent(['SSH_GIT_CREDENTIALS']) {
+                        xversion.apply(tag:currentVersion)
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
               
             </div>
           </div>
