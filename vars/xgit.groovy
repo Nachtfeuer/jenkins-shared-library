@@ -39,3 +39,12 @@ String getAuthorMail() {
 String getLastTag() {
     new Git(this).lastTag
 }
+
+
+/**
+ * Check whether there are changes since last tag.
+ * @return true when there are changes otherwise false.
+ */
+boolean getChangesSinceLastTag() {
+    new Git(this).changesSinceLastTag
+}
